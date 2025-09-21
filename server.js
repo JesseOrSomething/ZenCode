@@ -132,7 +132,6 @@ const authenticateToken = (req, res, next) => {
 
 // Middleware
 app.use(bodyParser.json({ limit: '50mb' })); // Increase limit for large images
-app.use(express.static('.'));
 
 // CORS middleware
 app.use((req, res, next) => {
@@ -578,6 +577,9 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString() 
   });
 });
+
+// Serve static files (after all API routes)
+app.use(express.static('.'));
 
 // Start server
 app.listen(PORT, () => {
