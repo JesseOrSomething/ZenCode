@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="pricing.html" class="nav-link">Pricing</a>
+            <button class="nav-btn login-btn" id="loginBtn">Login</button>
+            <button class="nav-btn signup-btn" id="signupBtn">Sign Up</button>
+            <button class="nav-btn account-btn" id="accountBtn" style="display: none;">Account</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="input-container">
+                <div class="input-field">
+                    <div class="input-area">
+                        <div class="question-counter" id="questionCounter" style="display: none;">
+                            <span id="questionCountText">Questions remaining: 3</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
+                            <button id="imageButton" class="image-button" title="Upload image">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </button>
+                            <input type="text" id="messageInput" class="message-input" placeholder="I want you to make a..." autocomplete="off">
+                            <button id="sendButton" class="send-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will appear here -->
+                    </div>
+                    <div class="auth-prompt" id="authPrompt" style="display: none;">
+                        <div class="auth-prompt-content">
+                            <h3>Want to continue chatting?</h3>
+                            <p>Sign up or log in to ask unlimited questions!</p>
+                            <div class="auth-buttons">
+                                <button class="auth-btn login-btn" id="fullscreenLoginBtn">Login</button>
+                                <button class="auth-btn signup-btn" id="fullscreenSignupBtn">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="upgrade-prompt" id="upgradePrompt" style="display: none;">
+                        <div class="upgrade-prompt-content">
+                            <h3>Daily Limit Reached</h3>
+                            <p>You've reached your daily limit. Upgrade your plan for unlimited access!</p>
+                            <div class="upgrade-buttons">
+                                <button class="upgrade-btn" id="upgradeBtn">Upgrade Now</button>
+                                <button class="close-btn" id="closeUpgradeBtn">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js" defer></script>
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const accountBtn = document.getElementById('accountBtn');
+            const authPrompt = document.getElementById('authPrompt');
+            const questionCounter = document.getElementById('questionCounter');
+            
+            if (user && token) {
+                // Check if user has a subscription
+                try {
+                    const response = await fetch('/api/subscription', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.plan) {
+                            // User has a subscription - show account button
+                            loginBtn.style.display = 'none';
+                            signupBtn.style.display = 'none';
+                            accountBtn.style.display = 'block';
+                            if (authPrompt) authPrompt.style.display = 'none';
+                            if (questionCounter) questionCounter.style.display = 'none';
+                        } else {
+                            // User doesn't have a subscription - redirect to pricing
+                            window.location.href = 'pricing.html';
+                        }
+                    } else {
+                        // Error checking subscription - redirect to pricing
+                        window.location.href = 'pricing.html';
+                    }
+                } catch (error) {
+                    console.error('Error checking subscription:', error);
+                    window.location.href = 'pricing.html';
+                }
+            } else {
+                // User is not authenticated - show login/signup buttons and question counter
+                loginBtn.style.display = 'block';
+                signupBtn.style.display = 'block';
+                accountBtn.style.display = 'none';
+                if (questionCounter) questionCounter.style.display = 'block';
+            }
+            
+            // Add event listener for account button
+            accountBtn.addEventListener('click', () => {
+                window.location.href = 'account.html';
+            });
+        });
+    </script>
+</body>
+</html>

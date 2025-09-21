@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fab387, #f5c2e7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .success-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .success-button {
+            background: linear-gradient(135deg, #fab387, #f5c2e7);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .success-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(250, 179, 135, 0.3);
+        }
+        
+        .loading {
+            display: none;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="grain"></div>
+    </div>
+    
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1 class="success-title">Payment Successful!</h1>
+        <p class="success-message">
+            Your Pro subscription has been activated. You now have unlimited access to all AI features!
+        </p>
+        <div class="loading" id="loading">
+            Activating your subscription...
+        </div>
+        <a href="index.html" class="success-button" id="continueBtn" style="display: none;">
+            Continue to Chat
+        </a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+            const loading = document.getElementById('loading');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            if (sessionId) {
+                loading.style.display = 'block';
+                
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch('/api/payment-success', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ sessionId: sessionId })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('selectedPlan', 'pro');
+                        loading.style.display = 'none';
+                        continueBtn.style.display = 'inline-block';
+                    } else {
+                        const errorData = await response.json();
+                        alert('Error activating subscription: ' + (errorData.error || 'Unknown error'));
+                        window.location.href = 'pricing.html';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error activating subscription. Please try again.');
+                    window.location.href = 'pricing.html';
+                }
+            } else {
+                // No session ID, redirect to pricing
+                window.location.href = 'pricing.html';
+            }
+        });
+    </script>
+</body>
+</html>

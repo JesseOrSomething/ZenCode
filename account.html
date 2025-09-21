@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .account-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .account-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .account-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .account-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .account-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subscription-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .plan-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .status-free {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+            border: 1px solid rgba(156, 163, 175, 0.3);
+        }
+        
+        .plan-details {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        
+        .plan-features li {
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #fab387, #f5c2e7);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(250, 179, 135, 0.3);
+        }
+        
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .loading {
+            display: none;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .back-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 30px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: white;
+        }
+        
+        .back-link::before {
+            content: "←";
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="grain"></div>
+    </div>
+    
+    <div class="account-container">
+        <a href="index.html" class="back-link">Back to Chat</a>
+        
+        <div class="account-header">
+            <h1 class="account-title">Account Settings</h1>
+            <p class="account-subtitle">Manage your subscription and account</p>
+        </div>
+        
+        <div class="account-card">
+            <div class="subscription-info">
+                <div>
+                    <div class="plan-name" id="planName">Loading...</div>
+                    <div class="plan-details" id="planDetails">Loading subscription details...</div>
+                </div>
+                <div class="plan-status" id="planStatus">Loading...</div>
+            </div>
+            
+            <ul class="plan-features" id="planFeatures">
+                <!-- Features will be loaded dynamically -->
+            </ul>
+            
+            <div class="account-actions" id="accountActions">
+                <!-- Actions will be loaded dynamically -->
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            Processing your request...
+        </div>
+        
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (!token || !user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            await loadAccountInfo();
+        });
+        
+        async function loadAccountInfo() {
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            try {
+                loading.style.display = 'block';
+                
+                const response = await fetch('/api/subscription', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateAccountDisplay(data);
+                } else {
+                    const errorData = await response.json();
+                    showError('Failed to load account information: ' + (errorData.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Error loading account information. Please try again.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+        
+        function updateAccountDisplay(data) {
+            const planName = document.getElementById('planName');
+            const planDetails = document.getElementById('planDetails');
+            const planStatus = document.getElementById('planStatus');
+            const planFeatures = document.getElementById('planFeatures');
+            const accountActions = document.getElementById('accountActions');
+            
+            if (data.plan === 'pro') {
+                planName.textContent = 'Pro Plan';
+                planDetails.textContent = 'Monthly subscription - $9/month';
+                planStatus.textContent = 'Active';
+                planStatus.className = 'plan-status status-active';
+                
+                planFeatures.innerHTML = `
+                    <li>Unlimited questions</li>
+                    <li>Image analysis</li>
+                    <li>Conversation history</li>
+                    <li>Priority support</li>
+                `;
+                
+                accountActions.innerHTML = `
+                    <button class="btn btn-danger" onclick="cancelSubscription()">Cancel Subscription</button>
+                    <a href="pricing.html" class="btn btn-secondary">Change Plan</a>
+                `;
+            } else {
+                planName.textContent = 'Free Plan';
+                planDetails.textContent = '3 questions per day';
+                planStatus.textContent = 'Active';
+                planStatus.className = 'plan-status status-free';
+                
+                planFeatures.innerHTML = `
+                    <li>3 questions per day</li>
+                    <li>Basic AI responses</li>
+                    <li>Text-only conversations</li>
+                `;
+                
+                accountActions.innerHTML = `
+                    <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+                `;
+            }
+        }
+        
+        async function cancelSubscription() {
+            if (!confirm('Are you sure you want to cancel your subscription? You will lose access to Pro features immediately.')) {
+                return;
+            }
+            
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            try {
+                loading.style.display = 'block';
+                
+                const response = await fetch('/api/cancel-subscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showSuccess(data.message);
+                    await loadAccountInfo(); // Reload account info
+                } else {
+                    const errorData = await response.json();
+                    showError('Failed to cancel subscription: ' + (errorData.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Error canceling subscription. Please try again.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+        
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        function showSuccess(message) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .pricing-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #eba0ac, #fab387, #f5c2e7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 500;
+            transform: scale(1);
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(1);
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .login-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .signup-btn {
+            background: #000000;
+            color: white;
+            border: 1px solid #333333;
+        }
+        
+        .signup-btn:hover {
+            background: #1a1a1a;
+            border-color: #555555;
+            transform: scale(1.05);
+        }
+        
+        .account-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .account-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+            align-items: stretch;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid #fab387;
+            transform: scale(1.05);
+            background: rgba(250, 179, 135, 0.1);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.07);
+            background: rgba(250, 179, 135, 0.15);
+        }
+        
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #fab387, #f5c2e7);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fab387;
+            margin-bottom: 5px;
+        }
+        
+        .plan-period {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 40px;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            color: #fab387;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .plan-button {
+            width: 100%;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: scale(1);
+        }
+        
+        .plan-button.free {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .plan-button.free:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .plan-button.pro {
+            background: linear-gradient(135deg, #fab387, #f5c2e7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .plan-button.pro:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(250, 179, 135, 0.3);
+        }
+        
+        .plan-button.premium {
+            background: linear-gradient(135deg, #eba0ac, #fab387);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .plan-button.premium:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(235, 160, 172, 0.3);
+        }
+        
+        .faq-section {
+            margin-top: 80px;
+            margin-bottom: 120px;
+            padding-bottom: 40px;
+        }
+        
+        .faq-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(1);
+        }
+        
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .faq-answer {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #eba0ac, #fab387, #f9e2af, #f2cdcd, #f5c2e7);
+            background-size: 400% 400%;
+            animation: gradientShift 60s ease infinite;
+            z-index: -2;
+        }
+        
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            z-index: -1;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-title {
+                font-size: 2rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="grain"></div>
+    </div>
+    
+    <nav class="nav">
+        <a href="index.html" class="nav-link">Chat</a>
+        <button id="loginBtn" class="nav-btn login-btn">Login</button>
+        <button id="signupBtn" class="nav-btn signup-btn">Sign Up</button>
+        <button id="accountBtn" class="nav-btn account-btn" style="display: none;">Account</button>
+    </nav>
+    
+    <div class="pricing-container">
+        <div class="pricing-header">
+            <h1 class="pricing-title">Choose Your Plan</h1>
+            <p class="pricing-subtitle">Unlock the full potential of AI assistance with our flexible pricing plans</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Free</h3>
+                <div class="plan-price">$0</div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>3 questions per day</li>
+                    <li>Basic AI responses</li>
+                    <li>Text-only conversations</li>
+                    <li>Community support</li>
+                </ul>
+                <button class="plan-button free" onclick="selectPlan('free')">Choose Free</button>
+            </div>
+            
+            <!-- Pro Plan -->
+            <div class="pricing-card featured">
+                <h3 class="plan-name">Pro</h3>
+                <div class="plan-price">$17.49</div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>Unlimited questions</li>
+                    <li>Advanced AI responses</li>
+                    <li>Image analysis</li>
+                    <li>Conversation history</li>
+                    <li>Priority support</li>
+                    <li>API access</li>
+                </ul>
+                <button class="plan-button pro" onclick="selectPlan('pro')">Choose Pro</button>
+            </div>
+        </div>
+        
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I change my plan anytime?</h3>
+                    <p class="faq-answer">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">What payment methods do you accept?</h3>
+                    <p class="faq-answer">We accept all major credit cards, PayPal, and bank transfers for annual subscriptions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Is there a free trial?</h3>
+                    <p class="faq-answer">Yes! All paid plans come with a 7-day free trial. No credit card required.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">What happens if I exceed my limits?</h3>
+                    <p class="faq-answer">Free users will be prompted to upgrade. Paid users have unlimited access to all features.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function selectPlan(plan) {
+            const user = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+            
+            if (!user || !token) {
+                alert('Please log in to select a plan');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                if (plan === 'free') {
+                    // Update user subscription for free plan
+                    const response = await fetch('/api/subscription', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ plan: plan })
+                    });
+                    
+                    if (response.ok) {
+                        localStorage.setItem('selectedPlan', plan);
+                        window.location.href = 'index.html';
+                    } else {
+                        const errorData = await response.json();
+                        alert('Error updating subscription: ' + (errorData.error || 'Unknown error'));
+                    }
+                } else if (plan === 'pro') {
+                    // Create Stripe checkout session for Pro plan
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ plan: plan })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        // Redirect to Stripe checkout
+                        window.location.href = data.url;
+                    } else {
+                        const errorData = await response.json();
+                        alert('Error setting up payment: ' + (errorData.error || 'Unknown error'));
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error processing request. Please try again.');
+            }
+        }
+        
+        // Check authentication status
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const accountBtn = document.getElementById('accountBtn');
+            
+            if (user && token) {
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                accountBtn.style.display = 'block';
+            } else {
+                loginBtn.style.display = 'block';
+                signupBtn.style.display = 'block';
+                accountBtn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
