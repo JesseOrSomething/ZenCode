@@ -1,7 +1,7 @@
-import fetch from 'node-fetch';
-import jwt from 'jsonwebtoken';
-import fs from 'fs';
-import path from 'path';
+const fetch = require('node-fetch');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 
 // Load data from files
 function loadUsers() {
@@ -87,11 +87,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    const conversations = loadConversations();
-    const conversation = conversationId && conversations[conversationId] 
-      ? conversations[conversationId] 
-      : { messages: [] };
-
+    // Simplified conversation handling for now
+    const conversation = { messages: [] };
     conversation.messages.push({ role: 'user', content: message });
 
     const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -126,8 +123,6 @@ export default async function handler(req, res) {
     conversation.messages.push({ role: 'assistant', content: aiMessage });
 
     const newConversationId = conversationId || Date.now().toString();
-    conversations[newConversationId] = conversation;
-    saveConversations(conversations);
 
     res.json({
       response: aiMessage,
