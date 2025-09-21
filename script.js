@@ -286,7 +286,7 @@ class ChatInterface {
                 headers['Authorization'] = `Bearer ${token}`;
             }
             
-            const response = await fetch('/api/chat', {
+            const response = await fetch('/chat', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({

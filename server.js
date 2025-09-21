@@ -412,7 +412,7 @@ app.post('/api/cancel-subscription', authenticateToken, async (req, res) => {
 });
 
 // Chat endpoint
-app.post('/api/chat', async (req, res) => {
+app.post('/chat', async (req, res) => {
   console.log('Chat endpoint hit:', req.method, req.url);
   try {
     const { message, image, conversationId } = req.body;
@@ -580,11 +580,11 @@ app.get('/health', (req, res) => {
 });
 
 // Test endpoint
-app.get('/api/test', (req, res) => {
+app.get('/test', (req, res) => {
   res.json({ message: 'API is working!' });
 });
 
-app.post('/api/test', (req, res) => {
+app.post('/test', (req, res) => {
   res.json({ message: 'POST API is working!' });
 });
 
