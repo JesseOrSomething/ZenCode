@@ -20,6 +20,14 @@
     {
       "source": "/api/auth/login",
       "destination": "/api/login"
+    },
+    {
+      "source": "/api/create-checkout-session",
+      "destination": "/api/create-checkout-session"
+    },
+    {
+      "source": "/api/payment-success",
+      "destination": "/api/payment-success"
     }
   ]
 }
