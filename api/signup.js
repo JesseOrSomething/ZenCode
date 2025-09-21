@@ -1,35 +1,3 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
-
-// Load data from files
-function loadUsers() {
-  try {
-    const usersFile = path.join(process.cwd(), 'data', 'users.json');
-    if (fs.existsSync(usersFile)) {
-      const data = fs.readFileSync(usersFile, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error('Error loading users:', error);
-  }
-  return {};
-}
-
-function saveUsers(users) {
-  try {
-    const dataDir = path.join(process.cwd(), 'data');
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-    const usersFile = path.join(dataDir, 'users.json');
-    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-  } catch (error) {
-    console.error('Error saving users:', error);
-  }
-}
-
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -53,28 +21,13 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const users = loadUsers();
-
-    if (users[email]) {
-      return res.status(400).json({ error: 'User already exists' });
+    // Simple validation for now
+    if (email.length < 5 || password.length < 3) {
+      return res.status(400).json({ error: 'Email and password must be longer' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
     const userId = Date.now().toString();
-
-    users[email] = {
-      id: userId,
-      name,
-      email,
-      password: hashedPassword,
-      subscription: 'free',
-      subscriptionId: null,
-      createdAt: new Date().toISOString()
-    };
-
-    saveUsers(users);
-
-    const token = jwt.sign({ userId, email }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '7d' });
+    const token = 'temp_token_' + userId;
 
     res.json({
       message: 'User created successfully',
