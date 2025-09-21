@@ -21,14 +21,15 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Plan is required' });
     }
 
-    // For now, return a mock checkout URL
-    // In production, you would integrate with Stripe here
+    // For demo purposes, redirect directly to payment success
+    // In production, you would integrate with real Stripe checkout
     const mockSessionId = 'cs_test_' + Date.now();
-    const mockCheckoutUrl = `https://checkout.stripe.com/pay/${mockSessionId}`;
+    const baseUrl = process.env.FRONTEND_URL || 'https://zen-code-beta.vercel.app';
+    const successUrl = `${baseUrl}/payment-success.html?session_id=${mockSessionId}`;
 
     res.json({
       sessionId: mockSessionId,
-      url: mockCheckoutUrl,
+      url: successUrl,
       message: 'Checkout session created (demo mode)'
     });
   } catch (error) {
