@@ -413,6 +413,7 @@ app.post('/api/cancel-subscription', authenticateToken, async (req, res) => {
 
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
+  console.log('Chat endpoint hit:', req.method, req.url);
   try {
     const { message, image, conversationId } = req.body;
     
@@ -576,6 +577,15 @@ app.get('/health', (req, res) => {
     status: 'OK', 
     timestamp: new Date().toISOString() 
   });
+});
+
+// Test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working!' });
+});
+
+app.post('/api/test', (req, res) => {
+  res.json({ message: 'POST API is working!' });
 });
 
 // Serve static files (after all API routes)
