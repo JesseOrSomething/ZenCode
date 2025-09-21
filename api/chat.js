@@ -1,7 +1,7 @@
-const fetch = require('node-fetch');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
+import fetch from 'node-fetch';
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 // Load data from files
 function loadUsers() {
@@ -44,6 +44,8 @@ function saveConversations(conversations) {
 }
 
 export default async function handler(req, res) {
+  console.log('Chat API hit:', req.method, req.url);
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -60,9 +62,13 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log('Request body:', req.body);
     const { message, image, conversationId } = req.body;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+
+    console.log('Message:', message);
+    console.log('Token present:', !!token);
 
     let user = null;
     if (token) {
@@ -70,12 +76,14 @@ export default async function handler(req, res) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
         const users = loadUsers();
         user = users[decoded.email];
+        console.log('User found:', !!user);
       } catch (err) {
         console.log('Invalid token, proceeding as guest');
       }
     }
 
     if (!message) {
+      console.log('No message provided');
       return res.status(400).json({ error: 'Message is required' });
     }
 
