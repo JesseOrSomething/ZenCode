@@ -1,47 +1,4 @@
-const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
-
-// Load data from files
-function loadUsers() {
-  try {
-    const usersFile = path.join(process.cwd(), 'data', 'users.json');
-    if (fs.existsSync(usersFile)) {
-      const data = fs.readFileSync(usersFile, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error('Error loading users:', error);
-  }
-  return {};
-}
-
-function loadConversations() {
-  try {
-    const conversationsFile = path.join(process.cwd(), 'data', 'conversations.json');
-    if (fs.existsSync(conversationsFile)) {
-      const data = fs.readFileSync(conversationsFile, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error('Error loading conversations:', error);
-  }
-  return {};
-}
-
-function saveConversations(conversations) {
-  try {
-    const dataDir = path.join(process.cwd(), 'data');
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-    const conversationsFile = path.join(dataDir, 'conversations.json');
-    fs.writeFileSync(conversationsFile, JSON.stringify(conversations, null, 2));
-  } catch (error) {
-    console.error('Error saving conversations:', error);
-  }
-}
 
 export default async function handler(req, res) {
   console.log('Chat API hit:', req.method, req.url);
@@ -74,9 +31,9 @@ export default async function handler(req, res) {
     if (token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
-        const users = loadUsers();
-        user = users[decoded.email];
-        console.log('User found:', !!user);
+        console.log('Token decoded:', decoded.email);
+        // For now, just verify the token without user lookup
+        user = { id: decoded.userId, email: decoded.email };
       } catch (err) {
         console.log('Invalid token, proceeding as guest');
       }
