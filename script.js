@@ -6,6 +6,7 @@ class ChatInterface {
         this.attachedImage = null;
         this.maxQuestions = 3;
         this.questionCount = this.getQuestionCount();
+        this.selectedPlan = localStorage.getItem('selectedPlan');
         this.initializeElements();
         this.setupEventListeners();
         this.updateQuestionCounter();
@@ -234,16 +235,24 @@ class ChatInterface {
         const token = localStorage.getItem('token');
         
         if (!user || !token) {
-            // User is not authenticated - check question limit
-            if (this.questionCount >= this.maxQuestions) {
-                this.addMessage('system', 'Please log in to continue talking with the AI. You\'ve reached the limit of 3 questions for unauthenticated users.');
+            // User is not authenticated - check if they have selected a plan
+            if (this.selectedPlan === 'free') {
+                // Free plan users get 3 questions per day
+                if (this.questionCount >= this.maxQuestions) {
+                    this.addMessage('system', 'You\'ve reached your daily limit of 3 questions. Upgrade to Pro for unlimited access!');
+                    this.showUpgradePrompt();
+                    return;
+                }
+                // Increment question count for free plan users
+                this.questionCount++;
+                this.setQuestionCount(this.questionCount);
+                this.updateQuestionCounter();
+            } else {
+                // No plan selected - show auth prompt
+                this.addMessage('system', 'Please select a plan to start chatting with the AI.');
                 this.showAuthPrompt();
                 return;
             }
-            // Increment question count for unauthenticated users
-            this.questionCount++;
-            this.setQuestionCount(this.questionCount);
-            this.updateQuestionCounter();
         }
 
         console.log('Sending message:', message); // Debug log
