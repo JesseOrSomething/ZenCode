@@ -362,11 +362,37 @@ class ChatInterface {
     }
 
     formatResponse(content) {
-        // Basic formatting for code blocks
-        return this.escapeHtml(content)
-            .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
-            .replace(/`([^`]+)`/g, '<code>$1</code>')
-            .replace(/\n/g, '<br>');
+        // Enhanced formatting for code blocks with copy buttons
+        let formatted = this.escapeHtml(content);
+        
+        // Handle code blocks with copy buttons
+        formatted = formatted.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, language, code) => {
+            const lang = language || 'text';
+            const codeId = 'code_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            return `
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">${lang}</span>
+                        <button class="copy-button" onclick="copyCode('${codeId}')" data-code-id="${codeId}">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="code-content" id="${codeId}">${code.trim()}</div>
+                </div>
+            `;
+        });
+        
+        // Handle inline code
+        formatted = formatted.replace(/`([^`]+)`/g, '<span class="inline-code">$1</span>');
+        
+        // Handle line breaks
+        formatted = formatted.replace(/\n/g, '<br>');
+        
+        return formatted;
     }
 
     escapeHtml(text) {
@@ -523,6 +549,45 @@ class ChatInterface {
             existingPreview.remove();
         }
     }
+}
+
+// Global function to copy code to clipboard
+function copyCode(codeId) {
+    const codeElement = document.getElementById(codeId);
+    if (!codeElement) return;
+    
+    const codeText = codeElement.textContent;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(codeText).then(() => {
+        // Find the copy button and update its appearance
+        const copyButton = document.querySelector(`[data-code-id="${codeId}"]`);
+        if (copyButton) {
+            const originalText = copyButton.innerHTML;
+            copyButton.innerHTML = `
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20,6 9,17 4,12"></polyline>
+                </svg>
+                Copied!
+            `;
+            copyButton.classList.add('copied');
+            
+            // Reset after 2 seconds
+            setTimeout(() => {
+                copyButton.innerHTML = originalText;
+                copyButton.classList.remove('copied');
+            }, 2000);
+        }
+    }).catch(err => {
+        console.error('Failed to copy code: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = codeText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    });
 }
 
 // Initialize chat interface when DOM is loaded
