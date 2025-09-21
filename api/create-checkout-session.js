@@ -1,3 +1,5 @@
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -21,19 +23,42 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Plan is required' });
     }
 
-    // For demo purposes, redirect directly to payment success
-    // In production, you would integrate with real Stripe checkout
-    const mockSessionId = 'cs_test_' + Date.now();
+    if (plan !== 'pro') {
+      return res.status(400).json({ error: 'Invalid plan for payment' });
+    }
+
     const baseUrl = process.env.FRONTEND_URL || 'https://zen-code-beta.vercel.app';
-    const successUrl = `${baseUrl}/payment-success.html?session_id=${mockSessionId}`;
+
+    // Create Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Pro Plan - Monthly',
+            description: 'Unlimited coding questions and features',
+          },
+          unit_amount: 1749, // $17.49 in cents
+          recurring: { interval: 'month' },
+        },
+        quantity: 1,
+      }],
+      mode: 'subscription',
+      success_url: `${baseUrl}/payment-success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/pricing.html`,
+      metadata: {
+        plan: plan
+      }
+    });
 
     res.json({
-      sessionId: mockSessionId,
-      url: successUrl,
-      message: 'Checkout session created (demo mode)'
+      sessionId: session.id,
+      url: session.url,
+      message: 'Checkout session created'
     });
   } catch (error) {
-    console.error('Checkout session error:', error);
+    console.error('Stripe checkout error:', error);
     res.status(500).json({ error: 'Error creating checkout session' });
   }
 }

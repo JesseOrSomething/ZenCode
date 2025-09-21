@@ -1,3 +1,5 @@
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -21,12 +23,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Session ID is required' });
     }
 
-    // For now, return success
-    // In production, you would verify the payment with Stripe here
-    res.json({
-      message: 'Payment successful (demo mode)',
-      subscription: 'pro'
-    });
+    // Retrieve the Stripe session to verify payment
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    
+    if (session.payment_status === 'paid' && session.subscription) {
+      res.json({
+        message: 'Payment successful',
+        subscription: 'pro',
+        subscriptionId: session.subscription
+      });
+    } else {
+      res.status(400).json({ error: 'Payment not completed' });
+    }
   } catch (error) {
     console.error('Payment success error:', error);
     res.status(500).json({ error: 'Error processing payment' });
