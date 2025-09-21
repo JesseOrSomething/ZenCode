@@ -373,12 +373,11 @@ class ChatInterface {
                 <div class="code-block">
                     <div class="code-header">
                         <span class="code-language">${lang}</span>
-                        <button class="copy-button" onclick="copyCode('${codeId}')" data-code-id="${codeId}">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <button class="copy-button" onclick="copyCode('${codeId}')" data-code-id="${codeId}" title="Copy code">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
-                            Copy
                         </button>
                     </div>
                     <div class="code-content" id="${codeId}">${code.trim()}</div>
@@ -565,18 +564,17 @@ function copyCode(codeId) {
         if (copyButton) {
             const originalText = copyButton.innerHTML;
             copyButton.innerHTML = `
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20,6 9,17 4,12"></polyline>
                 </svg>
-                Copied!
             `;
             copyButton.classList.add('copied');
             
-            // Reset after 2 seconds
+            // Reset after 1.5 seconds
             setTimeout(() => {
                 copyButton.innerHTML = originalText;
                 copyButton.classList.remove('copied');
-            }, 2000);
+            }, 1500);
         }
     }).catch(err => {
         console.error('Failed to copy code: ', err);
