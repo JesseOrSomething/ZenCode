@@ -12,6 +12,10 @@
     {
       "source": "/test",
       "destination": "/api/test"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
