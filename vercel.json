@@ -12,6 +12,14 @@
     {
       "source": "/test",
       "destination": "/api/test"
+    },
+    {
+      "source": "/api/auth/signup",
+      "destination": "/api/signup"
+    },
+    {
+      "source": "/api/auth/login",
+      "destination": "/api/login"
     }
   ]
 }
