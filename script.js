@@ -19,12 +19,22 @@ class ChatInterface {
     }
 
     getQuestionCount() {
+        const lastReset = this.getCookie('lastQuestionReset');
+        const today = new Date().toDateString();
+        
+        // If it's a new day, reset the count
+        if (lastReset !== today) {
+            this.setCookie('lastQuestionReset', today, 1); // Expires in 1 day
+            this.setCookie('questionCount', '0', 1); // Reset to 0
+            return 0;
+        }
+        
         const count = this.getCookie('questionCount');
         return count ? parseInt(count) : 0;
     }
 
     setQuestionCount(count) {
-        this.setCookie('questionCount', count, 7); // Expires in 7 days
+        this.setCookie('questionCount', count, 1); // Expires in 1 day
     }
 
     getCookie(name) {
@@ -43,6 +53,7 @@ class ChatInterface {
     resetQuestionCount() {
         this.questionCount = 0;
         this.setQuestionCount(0);
+        this.setCookie('lastQuestionReset', new Date().toDateString(), 1);
     }
 
     updateQuestionCounter() {
