@@ -513,7 +513,7 @@ app.post('/api/chat', async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo', // Use gpt-3.5-turbo for reliable performance
+        model: 'gpt-4-0613', // Use gpt-4-0613 for reliable performance
         messages: [
           {
             role: 'system',
@@ -532,7 +532,7 @@ app.post('/api/chat', async (req, res) => {
       const errorData = await response.json();
       console.error('OpenAI API Error:', errorData);
       console.error('Request body was:', JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4-0613',
         messages: [{ role: 'user', content: messageContent }]
       }, null, 2));
       return res.status(500).json({ 
