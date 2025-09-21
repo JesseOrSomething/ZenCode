@@ -63,23 +63,22 @@ class ChatInterface {
         const user = localStorage.getItem('user');
         const token = localStorage.getItem('token');
         
-        // If user is authenticated, hide auth prompt
+        // Always hide auth prompt by default
+        this.hideAuthPrompt();
+        
+        // If user is authenticated, they can chat freely
         if (user && token) {
-            this.hideAuthPrompt();
             return;
         }
         
-        // If user has selected free plan, hide auth prompt and show question counter
+        // If user has selected free plan, show question counter
         if (this.selectedPlan === 'free') {
-            this.hideAuthPrompt();
             this.updateQuestionCounter();
             return;
         }
         
-        // If no plan selected and not authenticated, show auth prompt
-        if (!this.selectedPlan) {
-            this.showAuthPrompt();
-        }
+        // If no plan selected and not authenticated, don't show auth prompt by default
+        // Auth prompt will only show when user tries to send a message without a plan
     }
 
     showAuthPrompt() {
