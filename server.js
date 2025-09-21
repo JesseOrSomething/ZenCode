@@ -133,6 +133,12 @@ const authenticateToken = (req, res, next) => {
 // Middleware
 app.use(bodyParser.json({ limit: '50mb' })); // Increase limit for large images
 
+// Debug middleware - log all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
+  next();
+});
+
 // CORS middleware
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -579,6 +585,15 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Simple root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'AI Chat App is running!',
+    endpoints: ['/chat', '/test', '/health'],
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Test endpoint
 app.get('/test', (req, res) => {
   res.json({ message: 'API is working!' });
@@ -586,6 +601,16 @@ app.get('/test', (req, res) => {
 
 app.post('/test', (req, res) => {
   res.json({ message: 'POST API is working!' });
+});
+
+// Catch-all route for debugging
+app.all('*', (req, res, next) => {
+  console.log(`Catch-all route hit: ${req.method} ${req.url}`);
+  if (req.url.startsWith('/api/') || req.url === '/chat' || req.url === '/test') {
+    console.log('API route should have been handled, but reached catch-all');
+    return res.status(404).json({ error: 'API route not found', url: req.url, method: req.method });
+  }
+  next();
 });
 
 // Serve static files (after all API routes)
