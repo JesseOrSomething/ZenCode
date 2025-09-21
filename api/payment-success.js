@@ -1,5 +1,3 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -23,8 +21,21 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Session ID is required' });
     }
 
-    // Retrieve the Stripe session to verify payment
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    // Retrieve the Stripe session using REST API
+    const stripeResponse = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+      }
+    });
+
+    if (!stripeResponse.ok) {
+      const errorData = await stripeResponse.text();
+      console.error('Stripe API error:', errorData);
+      return res.status(500).json({ error: 'Stripe API error' });
+    }
+
+    const session = await stripeResponse.json();
     
     if (session.payment_status === 'paid' && session.subscription) {
       res.json({

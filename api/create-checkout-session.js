@@ -1,5 +1,3 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -29,28 +27,35 @@ export default async function handler(req, res) {
 
     const baseUrl = process.env.FRONTEND_URL || 'https://zen-code-beta.vercel.app';
 
-    // Create Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Pro Plan - Monthly',
-            description: 'Unlimited coding questions and features',
-          },
-          unit_amount: 1749, // $17.49 in cents
-          recurring: { interval: 'month' },
-        },
-        quantity: 1,
-      }],
-      mode: 'subscription',
-      success_url: `${baseUrl}/payment-success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/pricing.html`,
-      metadata: {
-        plan: plan
-      }
+    // Create Stripe checkout session using REST API
+    const stripeResponse = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'payment_method_types[]': 'card',
+        'line_items[0][price_data][currency]': 'usd',
+        'line_items[0][price_data][product_data][name]': 'Pro Plan - Monthly',
+        'line_items[0][price_data][product_data][description]': 'Unlimited coding questions and features',
+        'line_items[0][price_data][unit_amount]': '1749',
+        'line_items[0][price_data][recurring][interval]': 'month',
+        'line_items[0][quantity]': '1',
+        'mode': 'subscription',
+        'success_url': `${baseUrl}/payment-success.html?session_id={CHECKOUT_SESSION_ID}`,
+        'cancel_url': `${baseUrl}/pricing.html`,
+        'metadata[plan]': plan
+      })
     });
+
+    if (!stripeResponse.ok) {
+      const errorData = await stripeResponse.text();
+      console.error('Stripe API error:', errorData);
+      return res.status(500).json({ error: 'Stripe API error' });
+    }
+
+    const session = await stripeResponse.json();
 
     res.json({
       sessionId: session.id,
@@ -58,7 +63,7 @@ export default async function handler(req, res) {
       message: 'Checkout session created'
     });
   } catch (error) {
-    console.error('Stripe checkout error:', error);
+    console.error('Checkout session error:', error);
     res.status(500).json({ error: 'Error creating checkout session' });
   }
 }
