@@ -448,31 +448,16 @@
             const user = localStorage.getItem('user');
             const token = localStorage.getItem('token');
             
-            if (!user || !token) {
-                alert('Please log in to select a plan');
-                window.location.href = 'login.html';
-                return;
-            }
-            
             try {
                 if (plan === 'free') {
-                    // Update user subscription for free plan
-                    const response = await fetch('/api/subscription', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({ plan: plan })
-                    });
-                    
-                    if (response.ok) {
-                        localStorage.setItem('selectedPlan', plan);
-                        window.location.href = 'index.html';
-                    } else {
-                        const errorData = await response.json();
-                        alert('Error updating subscription: ' + (errorData.error || 'Unknown error'));
-                    }
+                    // For free plan, allow without authentication
+                    localStorage.setItem('selectedPlan', plan);
+                    window.location.href = 'index.html';
+                } else if (!user || !token) {
+                    // For paid plans, require authentication
+                    alert('Please log in to select a paid plan');
+                    window.location.href = 'login.html';
+                    return;
                 } else if (plan === 'pro') {
                     // Create Stripe checkout session for Pro plan
                     const response = await fetch('/api/create-checkout-session', {
