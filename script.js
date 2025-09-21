@@ -7,9 +7,11 @@ class ChatInterface {
         this.maxQuestions = 3;
         this.questionCount = this.getQuestionCount();
         this.selectedPlan = localStorage.getItem('selectedPlan');
+        console.log('Selected plan:', this.selectedPlan); // Debug log
         this.initializeElements();
         this.setupEventListeners();
         this.updateQuestionCounter();
+        this.initializeAuthState();
     }
 
     generateConversationId() {
@@ -54,6 +56,29 @@ class ChatInterface {
             if (remaining <= 0) {
                 questionCounter.style.display = 'none';
             }
+        }
+    }
+
+    initializeAuthState() {
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        
+        // If user is authenticated, hide auth prompt
+        if (user && token) {
+            this.hideAuthPrompt();
+            return;
+        }
+        
+        // If user has selected free plan, hide auth prompt and show question counter
+        if (this.selectedPlan === 'free') {
+            this.hideAuthPrompt();
+            this.updateQuestionCounter();
+            return;
+        }
+        
+        // If no plan selected and not authenticated, show auth prompt
+        if (!this.selectedPlan) {
+            this.showAuthPrompt();
         }
     }
 
