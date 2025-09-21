@@ -28,6 +28,10 @@
     {
       "source": "/api/payment-success",
       "destination": "/api/payment-success"
+    },
+    {
+      "source": "/api/subscription",
+      "destination": "/api/subscription"
     }
   ]
 }

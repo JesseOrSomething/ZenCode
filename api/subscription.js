@@ -21,18 +21,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Plan is required' });
     }
 
-    // For now, return a mock checkout URL
-    // In production, you would integrate with Stripe here
-    const mockSessionId = 'cs_test_' + Date.now();
-    const mockCheckoutUrl = `https://checkout.stripe.com/pay/${mockSessionId}`;
-
+    // For now, just return success
+    // In production, you would update the user's subscription in the database
     res.json({
-      sessionId: mockSessionId,
-      url: mockCheckoutUrl,
-      message: 'Checkout session created (demo mode)'
+      message: 'Subscription updated successfully',
+      plan: plan
     });
   } catch (error) {
-    console.error('Checkout session error:', error);
-    res.status(500).json({ error: 'Error creating checkout session' });
+    console.error('Subscription error:', error);
+    res.status(500).json({ error: 'Error updating subscription' });
   }
 }
