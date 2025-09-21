@@ -1313,6 +1313,19 @@ body {
     gap: 20px;
 }
 
+/* Brand Styling */
+.nav-brand h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
     .nav {
