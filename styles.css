@@ -1218,6 +1218,322 @@ body {
     text-decoration: underline;
 }
 
+/* Mobile Navigation Styles */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.hamburger {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.mobile-menu-btn.active .hamburger:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-btn.active .hamburger:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .hamburger:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.mobile-nav.active {
+    display: flex;
+}
+
+.mobile-nav-link,
+.mobile-nav-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 200px;
+    text-align: center;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.mobile-nav-btn.login-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.mobile-nav-btn.signup-btn {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border: none;
+}
+
+.mobile-nav-btn.account-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border: none;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .nav {
+        padding: 15px 20px;
+        justify-content: space-between;
+    }
+    
+    .nav-brand h1 {
+        font-size: 1.5rem;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .desktop-nav {
+        display: none;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .input-container {
+        margin-bottom: 20px;
+    }
+    
+    .input-field {
+        padding: 15px;
+    }
+    
+    .input-wrapper {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .message-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px 16px;
+    }
+    
+    .send-button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .image-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .chat-messages {
+        padding: 15px;
+        max-height: 60vh;
+    }
+    
+    .message {
+        padding: 12px 16px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .message.user {
+        margin-left: 20px;
+    }
+    
+    .message.assistant {
+        margin-right: 20px;
+    }
+    
+    .message.system {
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+    
+    .auth-prompt,
+    .upgrade-prompt {
+        padding: 20px;
+        margin: 15px;
+    }
+    
+    .auth-prompt h3,
+    .upgrade-prompt h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .auth-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .question-counter {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .image-preview {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .remove-image-btn {
+        top: 5px;
+        right: 5px;
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    /* Code block mobile styles */
+    .code-block {
+        margin: 8px 0;
+        border-radius: 6px;
+    }
+    
+    .code-header {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
+    
+    .code-content {
+        padding: 10px;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    
+    .copy-button {
+        padding: 3px 5px;
+        font-size: 0.6rem;
+        height: 18px;
+    }
+    
+    .inline-code {
+        font-size: 0.8em;
+        padding: 1px 4px;
+    }
+}
+
+/* Tablet Responsive Design */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .nav {
+        padding: 20px 30px;
+    }
+    
+    .main-content {
+        padding: 30px;
+    }
+    
+    .input-field {
+        padding: 20px;
+    }
+    
+    .chat-messages {
+        max-height: 70vh;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .nav {
+        padding: 10px 15px;
+    }
+    
+    .nav-brand h1 {
+        font-size: 1.2rem;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+    
+    .input-field {
+        padding: 12px;
+    }
+    
+    .message-input {
+        font-size: 16px;
+        padding: 10px 14px;
+    }
+    
+    .send-button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .chat-messages {
+        padding: 10px;
+        max-height: 50vh;
+    }
+    
+    .message {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    
+    .auth-prompt,
+    .upgrade-prompt {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .auth-prompt h3,
+    .upgrade-prompt h3 {
+        font-size: 1.1rem;
+    }
+    
+    .mobile-nav-link,
+    .mobile-nav-btn {
+        font-size: 1.3rem;
+        padding: 12px 25px;
+        min-width: 180px;
+    }
+}
+
 /* Responsive design for account page */
 @media (max-width: 768px) {
     .account-container {

@@ -375,10 +375,32 @@
     </div>
     
     <nav class="nav">
-        <a href="index.html" class="nav-link">Chat</a>
-        <button id="loginBtn" class="nav-btn login-btn">Login</button>
-        <button id="signupBtn" class="nav-btn signup-btn">Sign Up</button>
-        <button id="accountBtn" class="nav-btn account-btn" style="display: none;">Account</button>
+        <div class="nav-brand">
+            <h1>CodeCraft AI</h1>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+        
+        <!-- Desktop navigation -->
+        <div class="nav-links desktop-nav">
+            <a href="index.html" class="nav-link">Chat</a>
+            <button id="loginBtn" class="nav-btn login-btn">Login</button>
+            <button id="signupBtn" class="nav-btn signup-btn">Sign Up</button>
+            <button id="accountBtn" class="nav-btn account-btn" style="display: none;">Account</button>
+        </div>
+        
+        <!-- Mobile navigation menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html" class="mobile-nav-link">Chat</a>
+            <button class="mobile-nav-btn login-btn" id="mobileLoginBtn">Login</button>
+            <button class="mobile-nav-btn signup-btn" id="mobileSignupBtn">Sign Up</button>
+            <button class="mobile-nav-btn account-btn" id="mobileAccountBtn" style="display: none;">Account</button>
+        </div>
     </nav>
     
     <div class="pricing-container">
@@ -484,6 +506,40 @@
             }
         }
         
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            });
+        }
+        
+        // Mobile navigation button event listeners
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileSignupBtn = document.getElementById('mobileSignupBtn');
+        const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+        
+        if (mobileLoginBtn) {
+            mobileLoginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+        
+        if (mobileSignupBtn) {
+            mobileSignupBtn.addEventListener('click', () => {
+                window.location.href = 'signup.html';
+            });
+        }
+        
+        if (mobileAccountBtn) {
+            mobileAccountBtn.addEventListener('click', () => {
+                window.location.href = 'account.html';
+            });
+        }
+
         // Check authentication status
         document.addEventListener('DOMContentLoaded', () => {
             const user = localStorage.getItem('user');
@@ -496,10 +552,18 @@
                 loginBtn.style.display = 'none';
                 signupBtn.style.display = 'none';
                 accountBtn.style.display = 'block';
+                // Also show/hide mobile buttons
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                if (mobileSignupBtn) mobileSignupBtn.style.display = 'none';
+                if (mobileAccountBtn) mobileAccountBtn.style.display = 'block';
             } else {
                 loginBtn.style.display = 'block';
                 signupBtn.style.display = 'block';
                 accountBtn.style.display = 'none';
+                // Also show/hide mobile buttons
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+                if (mobileSignupBtn) mobileSignupBtn.style.display = 'block';
+                if (mobileAccountBtn) mobileAccountBtn.style.display = 'none';
             }
         });
     </script>

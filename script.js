@@ -212,13 +212,7 @@ class ChatInterface {
         
         if (accountBtn) {
             accountBtn.addEventListener('click', () => {
-                // Show account options (logout for now)
-                if (confirm('Do you want to logout?')) {
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('token');
-                    // Refresh the page to show login/signup buttons
-                    window.location.reload();
-                }
+                window.location.href = 'account.html';
             });
         }
 
@@ -251,6 +245,40 @@ class ChatInterface {
         if (closeUpgradeBtn) {
             closeUpgradeBtn.addEventListener('click', () => {
                 this.hideUpgradePrompt();
+            });
+        }
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            });
+        }
+        
+        // Mobile navigation button event listeners
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileSignupBtn = document.getElementById('mobileSignupBtn');
+        const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+        
+        if (mobileLoginBtn) {
+            mobileLoginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+        
+        if (mobileSignupBtn) {
+            mobileSignupBtn.addEventListener('click', () => {
+                window.location.href = 'signup.html';
+            });
+        }
+        
+        if (mobileAccountBtn) {
+            mobileAccountBtn.addEventListener('click', () => {
+                window.location.href = 'account.html';
             });
         }
     }

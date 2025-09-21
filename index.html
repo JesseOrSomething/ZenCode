@@ -11,10 +11,32 @@
     <div class="container">
         <!-- Navigation -->
         <nav class="nav">
-            <a href="pricing.html" class="nav-link">Pricing</a>
-            <button class="nav-btn login-btn" id="loginBtn">Login</button>
-            <button class="nav-btn signup-btn" id="signupBtn">Sign Up</button>
-            <button class="nav-btn account-btn" id="accountBtn" style="display: none;">Account</button>
+            <div class="nav-brand">
+                <h1>CodeCraft AI</h1>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+            
+            <!-- Desktop navigation -->
+            <div class="nav-links desktop-nav">
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <button class="nav-btn login-btn" id="loginBtn">Login</button>
+                <button class="nav-btn signup-btn" id="signupBtn">Sign Up</button>
+                <button class="nav-btn account-btn" id="accountBtn" style="display: none;">Account</button>
+            </div>
+            
+            <!-- Mobile navigation menu -->
+            <div class="mobile-nav" id="mobileNav">
+                <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+                <button class="mobile-nav-btn login-btn" id="mobileLoginBtn">Login</button>
+                <button class="mobile-nav-btn signup-btn" id="mobileSignupBtn">Sign Up</button>
+                <button class="mobile-nav-btn account-btn" id="mobileAccountBtn" style="display: none;">Account</button>
+            </div>
         </nav>
 
         <!-- Main Content -->
@@ -101,6 +123,13 @@
                             loginBtn.style.display = 'none';
                             signupBtn.style.display = 'none';
                             accountBtn.style.display = 'block';
+                            // Also show/hide mobile buttons
+                            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+                            const mobileSignupBtn = document.getElementById('mobileSignupBtn');
+                            const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+                            if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                            if (mobileSignupBtn) mobileSignupBtn.style.display = 'none';
+                            if (mobileAccountBtn) mobileAccountBtn.style.display = 'block';
                             if (authPrompt) authPrompt.style.display = 'none';
                             if (questionCounter) questionCounter.style.display = 'none';
                         } else {
@@ -120,6 +149,13 @@
                 loginBtn.style.display = 'block';
                 signupBtn.style.display = 'block';
                 accountBtn.style.display = 'none';
+                // Also show/hide mobile buttons
+                const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+                const mobileSignupBtn = document.getElementById('mobileSignupBtn');
+                const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+                if (mobileSignupBtn) mobileSignupBtn.style.display = 'block';
+                if (mobileAccountBtn) mobileAccountBtn.style.display = 'none';
                 if (questionCounter) questionCounter.style.display = 'block';
             }
             
