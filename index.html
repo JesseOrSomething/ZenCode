@@ -41,9 +41,6 @@
             <div class="input-container">
                 <div class="input-field">
                     <div class="input-area">
-                        <div class="question-counter" id="questionCounter" style="display: none;">
-                            <span id="questionCountText" style="display: none;">Questions remaining: 3</span>
-                        </div>
                         <div class="input-wrapper">
                             <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
                             <button id="imageButton" class="image-button" title="Upload image">
@@ -142,7 +139,7 @@
                     window.location.href = 'pricing.html';
                 }
             } else {
-                // User is not authenticated - show login/signup buttons and question counter
+                // User is not authenticated - show login/signup buttons
                 loginBtn.style.display = 'block';
                 signupBtn.style.display = 'block';
                 accountBtn.style.display = 'none';
@@ -153,7 +150,7 @@
                 if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
                 if (mobileSignupBtn) mobileSignupBtn.style.display = 'block';
                 if (mobileAccountBtn) mobileAccountBtn.style.display = 'none';
-                if (questionCounter) questionCounter.style.display = 'block';
+                if (questionCounter) questionCounter.style.display = 'none';
             }
             
             // Add event listener for account button
