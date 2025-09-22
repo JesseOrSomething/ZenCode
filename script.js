@@ -57,17 +57,8 @@ class ChatInterface {
     }
 
     updateQuestionCounter() {
-        const questionCounter = document.getElementById('questionCounter');
-        const questionCountText = document.getElementById('questionCountText');
-        
-        if (questionCounter && questionCountText) {
-            const remaining = this.maxQuestions - this.questionCount;
-            questionCountText.textContent = `Questions remaining: ${remaining}`;
-            
-            if (remaining <= 0) {
-                questionCounter.style.display = 'none';
-            }
-        }
+        // Question counter is hidden from users
+        return;
     }
 
     initializeAuthState() {
