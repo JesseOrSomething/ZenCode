@@ -1,3 +1,6 @@
+// Import the shared user storage
+import { addUser, getUsers } from './login.js';
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -26,8 +29,26 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password must be longer' });
     }
 
+    // Check if user already exists
+    const existingUsers = getUsers();
+    if (existingUsers.find(user => user.email === email)) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+
     const userId = Date.now().toString();
-    const token = 'temp_token_' + userId;
+    const userData = {
+      id: userId,
+      name,
+      email,
+      password, // Store password in plain text for demo (not secure for production)
+      subscription: 'free',
+      subscriptionDate: new Date()
+    };
+
+    // Add user to shared storage
+    addUser(userData);
+
+    const token = 'demo_token_' + userId;
 
     res.json({
       message: 'User created successfully',

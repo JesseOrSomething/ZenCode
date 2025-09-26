@@ -2,17 +2,27 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 
 // Simple in-memory user storage for demo
 // In production, use a proper database
-const users = [
+let users = [
   {
     id: 'admin',
     name: 'Admin',
     email: 'admin@test.com',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // admin123
+    password: 'admin123', // Simple password for demo
     subscription: 'pro',
     subscriptionDate: new Date(),
     isAdmin: true
   }
 ];
+
+// Function to add user (used by signup)
+export function addUser(userData) {
+  users.push(userData);
+}
+
+// Function to get users (for debugging)
+export function getUsers() {
+  return users;
+}
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -43,8 +53,8 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Simple password check for demo (admin123)
-    if (password !== 'admin123' && user.email === 'admin@test.com') {
+    // Simple password check for demo
+    if (password !== user.password) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
