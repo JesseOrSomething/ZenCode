@@ -1118,35 +1118,84 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #fab387, #f5c2e7);
-    color: white;
+    background: #c0c0c0;
+    color: #333;
+    border: 1px solid #a0a0a0;
 }
 
 .btn-primary:hover {
+    background: #d0d0d0;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(250, 179, 135, 0.3);
+    box-shadow: 0 8px 25px rgba(192, 192, 192, 0.3);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #c0c0c0;
+    color: #333;
+    border: 1px solid #a0a0a0;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #d0d0d0;
     transform: translateY(-2px);
 }
 
 .btn-danger {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: #c0c0c0;
+    color: #333;
+    border: 1px solid #a0a0a0;
 }
 
 .btn-danger:hover {
-    background: rgba(239, 68, 68, 0.3);
+    background: #d0d0d0;
     transform: translateY(-2px);
+}
+
+.subscription-info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.plan-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.plan-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.plan-card h3 {
+    color: white;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.plan-card p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+}
+
+.plan-card .price {
+    color: #b4befe;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 12px;
+}
+
+.subscription-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .bug-report-form {
