@@ -70,6 +70,24 @@
             color: rgba(255, 255, 255, 0.8);
             margin-top: 20px;
         }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #11111b 0%, #181825 20%, #1e1e2e 40%, #313244 60%, #45475a 80%, #585b70 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 60s ease infinite;
+            z-index: -2;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
     </style>
 </head>
 <body>
