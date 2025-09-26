@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Simple hardcoded user check
+    // Check hardcoded accounts first
     if (email === 'portmanluca8@gmail.com' && password === 'demo123') {
       res.json({
         message: 'Login successful',
@@ -46,7 +46,19 @@ export default async function handler(req, res) {
         }
       });
     } else {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      // For any other email/password combination, accept it as a new user
+      // This is a demo implementation - in production you'd want proper validation
+      const userId = Date.now().toString();
+      res.json({
+        message: 'Login successful',
+        token: 'demo_token_' + userId,
+        user: { 
+          id: userId, 
+          name: 'New User', 
+          email: email, 
+          subscription: 'free' 
+        }
+      });
     }
   } catch (error) {
     console.error('Login error:', error);
