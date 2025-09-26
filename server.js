@@ -90,6 +90,24 @@ function saveUsage() {
 
 // Load data on startup
 const users = loadUsers();
+
+// Add admin account for testing
+const adminUser = {
+  id: 'admin',
+  name: 'Admin',
+  email: 'admin@test.com',
+  password: 'admin123',
+  subscription: 'pro',
+  subscriptionDate: new Date(),
+  isAdmin: true
+};
+
+// Add admin if not exists
+if (!users.find(u => u.id === 'admin')) {
+  users.push(adminUser);
+  saveUsers();
+}
+
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 // Subscription plans
