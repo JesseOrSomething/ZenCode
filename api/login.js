@@ -1,7 +1,25 @@
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
-// Import shared storage
-import { getUsers, findUser } from './shared-storage.js';
+// Simple user storage directly in login API
+const users = [
+  {
+    id: 'admin',
+    name: 'Admin',
+    email: 'admin@test.com',
+    password: 'admin123',
+    subscription: 'pro',
+    subscriptionDate: new Date().toISOString(),
+    isAdmin: true
+  },
+  {
+    id: '1758431030333',
+    name: 'Luca Portman',
+    email: 'portmanluca8@gmail.com',
+    password: 'demo123',
+    subscription: 'free',
+    subscriptionDate: new Date().toISOString()
+  }
+];
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -22,17 +40,23 @@ export default async function handler(req, res) {
   try {
     const { email, password } = req.body;
 
+    console.log('Login attempt:', { email, password: password ? '***' : 'empty' });
+    console.log('Available users:', users.map(u => ({ email: u.email, id: u.id })));
+
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
     // Find user
-    const user = findUser(email);
+    const user = users.find(user => user.email === email);
+    console.log('Found user:', user ? { email: user.email, id: user.id } : 'null');
+    
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
     // Simple password check for demo
+    console.log('Password check:', { provided: password, stored: user.password, match: password === user.password });
     if (password !== user.password) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
