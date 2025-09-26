@@ -1132,14 +1132,14 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .btn-danger {
-    background: #f38ba8;
+    background: #d20f39;
     color: white;
     font-weight: bold;
-    border: 1px solid #e64569;
+    border: 1px solid #b80d32;
 }
 
 .btn-danger:hover {
-    background: #f5a3b8;
+    background: #e11d48;
     transform: translateY(-2px);
 }
 
