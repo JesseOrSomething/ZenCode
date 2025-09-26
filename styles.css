@@ -19,43 +19,13 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     font-family: 'IBM Plex Mono', monospace;
 }
 
-/* Gradient background with subtle texture */
+/* Gradient background */
 .container {
     min-height: 100vh;
     background: linear-gradient(135deg, #11111b 0%, #181825 8%, #1e1e2e 16%, #313244 24%, #45475a 32%, #585b70 40%, #6c7086 48%, #7f849c 56%, #9399b2 64%, #a6adc8 72%, #bac2de 80%, #cdd6f4 88%, #b4befe 100%);
     background-size: 400% 400%;
     animation: gradientShift 60s ease infinite;
     position: relative;
-}
-
-/* Add grain texture overlay */
-.container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-/* Add grain effect */
-.container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
-    pointer-events: none;
-    mix-blend-mode: multiply;
-    z-index: 1;
 }
 
 @keyframes gradientShift {
