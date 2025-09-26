@@ -102,42 +102,19 @@
             const questionCounter = document.getElementById('questionCounter');
             
             if (user && token) {
-                // Check if user has a subscription
-                try {
-                    const response = await fetch('/api/subscription', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.plan) {
-                            // User has a subscription - show account button
-                            loginBtn.style.display = 'none';
-                            signupBtn.style.display = 'none';
-                            accountBtn.style.display = 'block';
-                            // Also show/hide mobile buttons
-                            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
-                            const mobileSignupBtn = document.getElementById('mobileSignupBtn');
-                            const mobileAccountBtn = document.getElementById('mobileAccountBtn');
-                            if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
-                            if (mobileSignupBtn) mobileSignupBtn.style.display = 'none';
-                            if (mobileAccountBtn) mobileAccountBtn.style.display = 'block';
-                            if (authPrompt) authPrompt.style.display = 'none';
-                            if (questionCounter) questionCounter.style.display = 'none';
-                        } else {
-                            // User doesn't have a subscription - redirect to pricing
-                            window.location.href = 'pricing.html';
-                        }
-                    } else {
-                        // Error checking subscription - redirect to pricing
-                        window.location.href = 'pricing.html';
-                    }
-                } catch (error) {
-                    console.error('Error checking subscription:', error);
-                    window.location.href = 'pricing.html';
-                }
+                // User is authenticated - show account button
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                accountBtn.style.display = 'block';
+                // Also show/hide mobile buttons
+                const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+                const mobileSignupBtn = document.getElementById('mobileSignupBtn');
+                const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                if (mobileSignupBtn) mobileSignupBtn.style.display = 'none';
+                if (mobileAccountBtn) mobileAccountBtn.style.display = 'block';
+                if (authPrompt) authPrompt.style.display = 'none';
+                if (questionCounter) questionCounter.style.display = 'none';
             } else {
                 // User is not authenticated - show login/signup buttons
                 loginBtn.style.display = 'block';
