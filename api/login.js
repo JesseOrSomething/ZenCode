@@ -2,6 +2,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 
 // Import shared storage
 import { getUsers, findUser } from './shared-storage.js';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -32,8 +33,23 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Simple password check for demo
-    if (password !== user.password) {
+    // Check password (handle both hashed and plain text)
+    let isValidPassword = false;
+    
+    if (user.password.startsWith('$2')) {
+      // Password is hashed, use bcrypt
+      try {
+        isValidPassword = await bcrypt.compare(password, user.password);
+      } catch (error) {
+        console.error('Bcrypt error:', error);
+        isValidPassword = false;
+      }
+    } else {
+      // Password is plain text (for demo accounts)
+      isValidPassword = password === user.password;
+    }
+    
+    if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
