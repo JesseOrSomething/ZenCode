@@ -1,26 +1,4 @@
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-
-// Simple in-memory storage with your account
-const users = [
-  {
-    id: 'admin',
-    name: 'Admin',
-    email: 'admin@test.com',
-    password: 'admin123',
-    subscription: 'pro',
-    subscriptionDate: new Date().toISOString(),
-    isAdmin: true
-  },
-  {
-    id: '1758431030333',
-    name: 'Luca Portman',
-    email: 'portmanluca8@gmail.com',
-    password: 'demo123',
-    subscription: 'free',
-    subscriptionDate: new Date().toISOString()
-  }
-];
-
+// Simple login handler
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -40,35 +18,36 @@ export default async function handler(req, res) {
   try {
     const { email, password } = req.body;
 
-    console.log('Login attempt:', { email, password: password ? '***' : 'empty' });
-    console.log('Available users:', users.map(u => ({ email: u.email, id: u.id })));
-
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Find user
-    const user = users.find(user => user.email === email);
-    console.log('Found user:', user ? { email: user.email, id: user.id } : 'null');
-    
-    if (!user) {
+    // Simple hardcoded user check
+    if (email === 'portmanluca8@gmail.com' && password === 'demo123') {
+      res.json({
+        message: 'Login successful',
+        token: 'demo_token_1758431030333',
+        user: { 
+          id: '1758431030333', 
+          name: 'Luca Portman', 
+          email: 'portmanluca8@gmail.com', 
+          subscription: 'free' 
+        }
+      });
+    } else if (email === 'admin@test.com' && password === 'admin123') {
+      res.json({
+        message: 'Login successful',
+        token: 'demo_token_admin',
+        user: { 
+          id: 'admin', 
+          name: 'Admin', 
+          email: 'admin@test.com', 
+          subscription: 'pro' 
+        }
+      });
+    } else {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-
-    // Simple password check for demo
-    console.log('Password check:', { provided: password, stored: user.password, match: password === user.password });
-    if (password !== user.password) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-
-    // Generate simple token for demo
-    const token = 'demo_token_' + user.id;
-
-    res.json({
-      message: 'Login successful',
-      token,
-      user: { id: user.id, name: user.name, email: user.email, subscription: user.subscription || 'free' }
-    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Internal server error' });

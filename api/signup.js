@@ -1,24 +1,4 @@
-// Simple in-memory storage (same as login)
-const users = [
-  {
-    id: 'admin',
-    name: 'Admin',
-    email: 'admin@test.com',
-    password: 'admin123',
-    subscription: 'pro',
-    subscriptionDate: new Date().toISOString(),
-    isAdmin: true
-  },
-  {
-    id: '1758431030333',
-    name: 'Luca Portman',
-    email: 'portmanluca8@gmail.com',
-    password: 'demo123',
-    subscription: 'free',
-    subscriptionDate: new Date().toISOString()
-  }
-];
-
+// Simple signup handler
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -47,25 +27,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password must be longer' });
     }
 
-    // Check if user already exists
-    if (users.find(user => user.email === email)) {
+    // Check if user already exists (hardcoded check)
+    if (email === 'portmanluca8@gmail.com' || email === 'admin@test.com') {
       return res.status(400).json({ error: 'User with this email already exists' });
     }
 
     const userId = Date.now().toString();
-    
-    const userData = {
-      id: userId,
-      name,
-      email,
-      password, // Store password in plain text for demo
-      subscription: 'free',
-      subscriptionDate: new Date().toISOString()
-    };
-
-    // Add user to memory (note: this won't persist between function calls)
-    users.push(userData);
-
     const token = 'demo_token_' + userId;
 
     res.json({
