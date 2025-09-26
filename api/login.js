@@ -1,29 +1,25 @@
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
-// Load users from JSON file
-function loadUsers() {
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const usersFile = path.join(__dirname, 'users.json');
-    const data = fs.readFileSync(usersFile, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error loading users:', error);
-    // Fallback to default users
-    return [
-      {
-        id: 'admin',
-        name: 'Admin',
-        email: 'admin@test.com',
-        password: 'admin123',
-        subscription: 'pro',
-        subscriptionDate: new Date().toISOString(),
-        isAdmin: true
-      }
-    ];
+// Simple in-memory storage with your account
+const users = [
+  {
+    id: 'admin',
+    name: 'Admin',
+    email: 'admin@test.com',
+    password: 'admin123',
+    subscription: 'pro',
+    subscriptionDate: new Date().toISOString(),
+    isAdmin: true
+  },
+  {
+    id: '1758431030333',
+    name: 'Luca Portman',
+    email: 'portmanluca8@gmail.com',
+    password: 'demo123',
+    subscription: 'free',
+    subscriptionDate: new Date().toISOString()
   }
-}
+];
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -51,8 +47,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Load users and find user
-    const users = loadUsers();
+    // Find user
     const user = users.find(user => user.email === email);
     console.log('Found user:', user ? { email: user.email, id: user.id } : 'null');
     

@@ -1,27 +1,23 @@
-// Load and save users from JSON file
-function loadUsers() {
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const usersFile = path.join(__dirname, 'users.json');
-    const data = fs.readFileSync(usersFile, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error loading users:', error);
-    return [];
+// Simple in-memory storage (same as login)
+const users = [
+  {
+    id: 'admin',
+    name: 'Admin',
+    email: 'admin@test.com',
+    password: 'admin123',
+    subscription: 'pro',
+    subscriptionDate: new Date().toISOString(),
+    isAdmin: true
+  },
+  {
+    id: '1758431030333',
+    name: 'Luca Portman',
+    email: 'portmanluca8@gmail.com',
+    password: 'demo123',
+    subscription: 'free',
+    subscriptionDate: new Date().toISOString()
   }
-}
-
-function saveUsers(users) {
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const usersFile = path.join(__dirname, 'users.json');
-    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-  } catch (error) {
-    console.error('Error saving users:', error);
-  }
-}
+];
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -51,9 +47,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password must be longer' });
     }
 
-    // Load existing users
-    const users = loadUsers();
-    
     // Check if user already exists
     if (users.find(user => user.email === email)) {
       return res.status(400).json({ error: 'User with this email already exists' });
@@ -70,9 +63,8 @@ export default async function handler(req, res) {
       subscriptionDate: new Date().toISOString()
     };
 
-    // Add user and save to file
+    // Add user to memory (note: this won't persist between function calls)
     users.push(userData);
-    saveUsers(users);
 
     const token = 'demo_token_' + userId;
 
