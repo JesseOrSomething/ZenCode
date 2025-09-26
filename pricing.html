@@ -547,13 +547,33 @@
             });
         }
 
+        // Desktop navigation button event listeners
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const accountBtn = document.getElementById('accountBtn');
+        
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+        
+        if (signupBtn) {
+            signupBtn.addEventListener('click', () => {
+                window.location.href = 'signup.html';
+            });
+        }
+        
+        if (accountBtn) {
+            accountBtn.addEventListener('click', () => {
+                window.location.href = 'account.html';
+            });
+        }
+
         // Check authentication status
         document.addEventListener('DOMContentLoaded', () => {
             const user = localStorage.getItem('user');
             const token = localStorage.getItem('token');
-            const loginBtn = document.getElementById('loginBtn');
-            const signupBtn = document.getElementById('signupBtn');
-            const accountBtn = document.getElementById('accountBtn');
             
             if (user && token) {
                 loginBtn.style.display = 'none';
