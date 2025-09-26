@@ -1,3 +1,21 @@
+import fs from 'fs';
+import path from 'path';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+
+// Load users from file
+function loadUsers() {
+  try {
+    const data = fs.readFileSync(path.join(process.cwd(), 'data', 'users.json'), 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error loading users:', error);
+    return [];
+  }
+}
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -21,18 +39,32 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Simple validation for now
-    if (email.length < 5 || password.length < 3) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    // Load users
+    const users = loadUsers();
+    
+    // Find user
+    const user = users.find(user => user.email === email);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const userId = Date.now().toString();
-    const token = 'temp_token_' + userId;
+    // Check password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
 
     res.json({
       message: 'Login successful',
       token,
-      user: { id: userId, name: 'User', email, subscription: 'free' }
+      user: { id: user.id, name: user.name, email: user.email, subscription: user.subscription || 'free' }
     });
   } catch (error) {
     console.error('Login error:', error);
