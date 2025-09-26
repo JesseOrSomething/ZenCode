@@ -547,46 +547,49 @@
             });
         }
 
-        // Desktop navigation button event listeners
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const accountBtn = document.getElementById('accountBtn');
-        
-        if (loginBtn) {
-            loginBtn.addEventListener('click', () => {
-                window.location.href = 'login.html';
-            });
-        }
-        
-        if (signupBtn) {
-            signupBtn.addEventListener('click', () => {
-                window.location.href = 'signup.html';
-            });
-        }
-        
-        if (accountBtn) {
-            accountBtn.addEventListener('click', () => {
-                window.location.href = 'account.html';
-            });
-        }
-
-        // Check authentication status
+        // Initialize page when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const accountBtn = document.getElementById('accountBtn');
             const user = localStorage.getItem('user');
             const token = localStorage.getItem('token');
             
+            // Add event listeners for navigation buttons
+            if (loginBtn) {
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                });
+            }
+            
+            if (signupBtn) {
+                signupBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'signup.html';
+                });
+            }
+            
+            if (accountBtn) {
+                accountBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'account.html';
+                });
+            }
+            
+            // Check authentication status and show/hide buttons
             if (user && token) {
-                loginBtn.style.display = 'none';
-                signupBtn.style.display = 'none';
-                accountBtn.style.display = 'block';
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (signupBtn) signupBtn.style.display = 'none';
+                if (accountBtn) accountBtn.style.display = 'block';
                 // Also show/hide mobile buttons
                 if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
                 if (mobileSignupBtn) mobileSignupBtn.style.display = 'none';
                 if (mobileAccountBtn) mobileAccountBtn.style.display = 'block';
             } else {
-                loginBtn.style.display = 'block';
-                signupBtn.style.display = 'block';
-                accountBtn.style.display = 'none';
+                if (loginBtn) loginBtn.style.display = 'block';
+                if (signupBtn) signupBtn.style.display = 'block';
+                if (accountBtn) accountBtn.style.display = 'none';
                 // Also show/hide mobile buttons
                 if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
                 if (mobileSignupBtn) mobileSignupBtn.style.display = 'block';
