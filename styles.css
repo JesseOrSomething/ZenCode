@@ -1162,14 +1162,14 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .btn-danger {
-    background: #c0c0c0;
+    background: #f38ba8;
     color: white;
     font-weight: bold;
-    border: 1px solid #a0a0a0;
+    border: 1px solid #e64569;
 }
 
 .btn-danger:hover {
-    background: #d0d0d0;
+    background: #f5a3b8;
     transform: translateY(-2px);
 }
 
