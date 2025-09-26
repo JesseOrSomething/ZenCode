@@ -1094,8 +1094,8 @@ body {
 }
 
 .free-plan {
-    border-color: #6b7280;
-    background: rgba(107, 114, 128, 0.1);
+    border-color: #b4befe;
+    background: rgba(180, 190, 254, 0.1);
 }
 
 .subscription-actions {
@@ -1232,7 +1232,7 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #b4befe;
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -1260,13 +1260,13 @@ body {
 }
 
 .contact-link {
-    color: #667eea;
+    color: #b4befe;
     text-decoration: none;
     font-weight: 600;
 }
 
 .contact-link:hover {
-    color: #764ba2;
+    color: #c0c0c0;
     text-decoration: underline;
 }
 
