@@ -1,5 +1,6 @@
 // Import the shared user storage
 import { addUser, getUsers } from './login.js';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -36,16 +37,20 @@ export default async function handler(req, res) {
     }
 
     const userId = Date.now().toString();
+    
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
     const userData = {
       id: userId,
       name,
       email,
-      password, // Store password in plain text for demo (not secure for production)
+      password: hashedPassword, // Store hashed password
       subscription: 'free',
-      subscriptionDate: new Date()
+      subscriptionDate: new Date().toISOString()
     };
 
-    // Add user to shared storage
+    // Add user to file storage
     addUser(userData);
 
     const token = 'demo_token_' + userId;
