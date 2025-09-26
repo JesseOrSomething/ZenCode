@@ -403,6 +403,20 @@ app.post('/api/payment-success', authenticateToken, async (req, res) => {
   }
 });
 
+// Logout endpoint
+app.post('/api/logout', authenticateToken, (req, res) => {
+  try {
+    // In a real app, you might want to blacklist the token
+    // For now, we'll just return success
+    res.json({ 
+      message: 'Logged out successfully' 
+    });
+  } catch (error) {
+    console.error('Logout error:', error);
+    res.status(500).json({ error: 'Logout failed' });
+  }
+});
+
 // Cancel subscription
 app.post('/api/cancel-subscription', authenticateToken, async (req, res) => {
   try {

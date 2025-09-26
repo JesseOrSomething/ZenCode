@@ -41,6 +41,9 @@
                         <span class="value" id="userStatus">Loading...</span>
                     </div>
                 </div>
+                <div class="account-actions">
+                    <button id="logoutBtn" class="btn btn-danger">Log Out</button>
+                </div>
             </div>
 
             <!-- Subscription Management -->
@@ -187,6 +190,11 @@
             }
 
             setupEventListeners() {
+                // Logout button
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    this.logout();
+                });
+
                 // Cancel subscription
                 document.getElementById('cancelSubscription').addEventListener('click', () => {
                     if (confirm('Are you sure you want to cancel your subscription? You will lose access to Pro features immediately.')) {
@@ -262,6 +270,16 @@
                     console.error('Error downgrading plan:', error);
                     alert('Error downgrading plan. Please contact support.');
                 }
+            }
+
+            logout() {
+                // Clear local storage
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                localStorage.removeItem('selectedPlan');
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
             }
 
             async submitBugReport() {
