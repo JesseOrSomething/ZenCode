@@ -5,12 +5,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 body {
     font-family: 'IBM Plex Mono', monospace;
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+/* Ensure all text elements use IBM Plex Mono */
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul, ol {
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 /* Gradient background with subtle texture */
