@@ -14,7 +14,7 @@ body {
 /* Gradient background with subtle texture */
 .container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #eba0ac 0%, #fab387 50%, #f5c2e7 100%);
+    background: linear-gradient(135deg, #b4befe 0%, #181825 50%, #313244 100%);
     background-size: 400% 400%;
     animation: gradientShift 60s ease infinite;
     position: relative;
@@ -625,7 +625,7 @@ body {
     padding: 0;
     height: 100vh;
     border-radius: 0;
-    background: linear-gradient(135deg, #eba0ac 0%, #fab387 50%, #f5c2e7 100%);
+    background: linear-gradient(135deg, #b4befe 0%, #181825 50%, #313244 100%);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
