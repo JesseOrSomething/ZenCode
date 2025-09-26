@@ -1119,7 +1119,8 @@ body {
 
 .btn-primary {
     background: #c0c0c0;
-    color: #333;
+    color: white;
+    font-weight: bold;
     border: 1px solid #a0a0a0;
 }
 
@@ -1131,7 +1132,8 @@ body {
 
 .btn-secondary {
     background: #c0c0c0;
-    color: #333;
+    color: white;
+    font-weight: bold;
     border: 1px solid #a0a0a0;
 }
 
@@ -1142,7 +1144,8 @@ body {
 
 .btn-danger {
     background: #c0c0c0;
-    color: #333;
+    color: white;
+    font-weight: bold;
     border: 1px solid #a0a0a0;
 }
 
