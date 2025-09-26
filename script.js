@@ -293,6 +293,35 @@ class ChatInterface {
             this.questionCount++;
             this.setQuestionCount(this.questionCount);
             this.updateQuestionCounter();
+        } else {
+            // User is authenticated - check subscription level
+            try {
+                const userData = JSON.parse(user);
+                if (userData.subscription !== 'pro') {
+                    // Free user - check question limit
+                    if (this.questionCount >= this.maxQuestions) {
+                        this.addMessage('system', 'You\'ve reached your daily limit of 3 questions. Upgrade to Pro for unlimited access!');
+                        this.showUpgradePrompt();
+                        return;
+                    }
+                    // Increment question count for free users
+                    this.questionCount++;
+                    this.setQuestionCount(this.questionCount);
+                    this.updateQuestionCounter();
+                }
+                // Pro users have unlimited access
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                // If we can't parse user data, treat as unauthenticated
+                if (this.questionCount >= this.maxQuestions) {
+                    this.addMessage('system', 'You\'ve reached your daily limit of 3 questions. Please log in or upgrade to Pro for unlimited access!');
+                    this.showAuthPrompt();
+                    return;
+                }
+                this.questionCount++;
+                this.setQuestionCount(this.questionCount);
+                this.updateQuestionCounter();
+            }
         }
 
         console.log('Sending message:', message); // Debug log
