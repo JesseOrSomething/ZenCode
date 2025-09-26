@@ -339,17 +339,61 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #11111b 0%, #181825 50%, #1e1e2e 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 60s ease infinite;
+            background: #000000;
             z-index: -2;
         }
         
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 3s linear infinite;
+            pointer-events: none;
+        }
         
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
+                radial-gradient(1px 1px at 100px 100px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 150px 150px, #ccc, transparent),
+                radial-gradient(1px 1px at 200px 200px, rgba(255,255,255,0.3), transparent);
+            background-repeat: repeat;
+            background-size: 300px 200px;
+            animation: sparkle 4s linear infinite reverse;
+            pointer-events: none;
+        }
+        
+        
+        @keyframes sparkle {
+            0% { 
+                opacity: 0.3;
+                transform: translateY(0px);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+            100% { 
+                opacity: 0.3;
+                transform: translateY(0px);
+            }
         }
         
         @media (max-width: 768px) {
