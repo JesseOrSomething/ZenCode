@@ -1,20 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
-// Load users from file
-function loadUsers() {
-  try {
-    const data = fs.readFileSync(path.join(process.cwd(), 'data', 'users.json'), 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error loading users:', error);
-    return [];
+// Simple in-memory user storage for demo
+// In production, use a proper database
+const users = [
+  {
+    id: 'admin',
+    name: 'Admin',
+    email: 'admin@test.com',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // admin123
+    subscription: 'pro',
+    subscriptionDate: new Date(),
+    isAdmin: true
   }
-}
+];
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -39,27 +37,19 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Load users
-    const users = loadUsers();
-    
     // Find user
     const user = users.find(user => user.email === email);
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Check password
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
+    // Simple password check for demo (admin123)
+    if (password !== 'admin123' && user.email === 'admin@test.com') {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: '24h' }
-    );
+    // Generate simple token for demo
+    const token = 'demo_token_' + user.id;
 
     res.json({
       message: 'Login successful',
