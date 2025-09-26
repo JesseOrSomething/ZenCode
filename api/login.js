@@ -33,18 +33,7 @@ export default async function handler(req, res) {
     }
 
     // Simple password check for demo
-    // For the existing user, we'll use a simple password for demo
-    let isValidPassword = false;
-    
-    if (user.email === 'portmanluca8@gmail.com') {
-      // Special case for existing user - use simple password for demo
-      isValidPassword = password === 'demo123';
-    } else {
-      // For other users, use stored password
-      isValidPassword = password === user.password;
-    }
-    
-    if (!isValidPassword) {
+    if (password !== user.password) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
