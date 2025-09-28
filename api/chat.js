@@ -15,11 +15,31 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body;
+    const { message, conversationHistory = [] } = req.body;
     
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
+
+    // Build messages array with conversation history
+    const messages = [
+      {
+        role: 'system',
+        content: 'You are ZenCode, an expert coding assistant designed specifically for software development. You excel at:\n\n- Writing clean, efficient code in any programming language\n- Debugging and fixing code issues\n- Explaining complex programming concepts\n- Code reviews and best practices\n- Architecture and design patterns\n- Performance optimization\n- Security best practices\n\nAlways provide:\n- Working, tested code examples\n- Clear explanations of your solutions\n- Best practices and industry standards\n- Security considerations when relevant\n- Performance tips for optimization\n\nFormat code with proper syntax highlighting and include comments. Be concise but thorough in your explanations.'
+      }
+    ];
+
+    // Add conversation history (limit to last 20 messages to avoid token limits)
+    const recentHistory = conversationHistory.slice(-20);
+    recentHistory.forEach(msg => {
+      messages.push({
+        role: msg.role,
+        content: msg.content
+      });
+    });
+
+    // Add current message
+    messages.push({ role: 'user', content: message });
 
     // Simple AI response without external dependencies
     const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -30,13 +50,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'gpt-4-0613',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are ZenCode, an expert coding assistant designed specifically for software development. You excel at:\n\n- Writing clean, efficient code in any programming language\n- Debugging and fixing code issues\n- Explaining complex programming concepts\n- Code reviews and best practices\n- Architecture and design patterns\n- Performance optimization\n- Security best practices\n\nAlways provide:\n- Working, tested code examples\n- Clear explanations of your solutions\n- Best practices and industry standards\n- Security considerations when relevant\n- Performance tips for optimization\n\nFormat code with proper syntax highlighting and include comments. Be concise but thorough in your explanations.'
-          },
-          { role: 'user', content: message }
-        ],
+        messages: messages,
         max_tokens: 1000,
         temperature: 0.7
       })

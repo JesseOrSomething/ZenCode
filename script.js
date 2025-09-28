@@ -7,6 +7,7 @@ class ChatInterface {
         this.maxQuestions = 3;
         this.questionCount = this.getQuestionCount();
         this.selectedPlan = localStorage.getItem('selectedPlan');
+        this.conversationHistory = this.loadConversationHistory();
         console.log('Selected plan:', this.selectedPlan); // Debug log
         this.initializeElements();
         this.setupEventListeners();
@@ -16,6 +17,55 @@ class ChatInterface {
 
     generateConversationId() {
         return 'conv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    loadConversationHistory() {
+        const history = localStorage.getItem(`conversation_${this.conversationId}`);
+        return history ? JSON.parse(history) : [];
+    }
+
+    saveConversationHistory() {
+        localStorage.setItem(`conversation_${this.conversationId}`, JSON.stringify(this.conversationHistory));
+    }
+
+    addToConversationHistory(role, content, imageUrl = null) {
+        const message = { role, content, timestamp: Date.now() };
+        if (imageUrl) {
+            message.imageUrl = imageUrl;
+        }
+        this.conversationHistory.push(message);
+        this.saveConversationHistory();
+    }
+
+    clearConversationHistory() {
+        this.conversationHistory = [];
+        localStorage.removeItem(`conversation_${this.conversationId}`);
+    }
+
+    startNewChat() {
+        // Clear current conversation
+        this.clearConversationHistory();
+        
+        // Generate new conversation ID
+        this.conversationId = this.generateConversationId();
+        
+        // Clear chat messages display
+        this.chatMessages.innerHTML = '';
+        
+        // Reset conversation state
+        this.hasStartedConversation = false;
+        this.attachedImage = null;
+        
+        // Focus on input
+        this.messageInput.focus();
+        
+        // Close mobile menu if open
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        if (mobileNav && mobileNav.classList.contains('active')) {
+            mobileNav.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+        }
     }
 
     getQuestionCount() {
@@ -68,6 +118,9 @@ class ChatInterface {
         // Always hide auth prompt by default
         this.hideAuthPrompt();
         
+        // Load existing conversation history and display it
+        this.loadAndDisplayHistory();
+        
         // If user is authenticated, they can chat freely
         if (user && token) {
             return;
@@ -75,6 +128,49 @@ class ChatInterface {
         
         // For unauthenticated users, show question counter (3 free questions)
         this.updateQuestionCounter();
+    }
+
+    loadAndDisplayHistory() {
+        // Load conversation history from localStorage
+        const history = this.conversationHistory;
+        
+        // Display each message in the chat
+        history.forEach(msg => {
+            if (msg.role !== 'system') { // Don't display system messages
+                this.displayMessage(msg.role, msg.content, msg.imageUrl);
+            }
+        });
+    }
+
+    displayMessage(role, content, imageUrl = null) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}-message ${imageUrl ? 'image-message' : ''}`;
+        
+        let imageHtml = '';
+        if (imageUrl) {
+            imageHtml = `<img src="${imageUrl}" alt="Uploaded image" class="message-image">`;
+        }
+        
+        if (role === 'user') {
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    ${imageHtml}
+                    <div class="message-text">${this.escapeHtml(content)}</div>
+                    <div class="message-time">${this.getCurrentTime()}</div>
+                </div>
+            `;
+        } else {
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    ${imageHtml}
+                    <div class="message-text">${this.formatResponse(content)}</div>
+                    <div class="message-time">${this.getCurrentTime()}</div>
+                </div>
+            `;
+        }
+
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
     }
 
     showAuthPrompt() {
@@ -188,6 +284,7 @@ class ChatInterface {
         const loginBtn = document.getElementById('loginBtn');
         const signupBtn = document.getElementById('signupBtn');
         const accountBtn = document.getElementById('accountBtn');
+        const newChatBtn = document.getElementById('newChatBtn');
         
         if (loginBtn) {
             loginBtn.addEventListener('click', () => {
@@ -204,6 +301,12 @@ class ChatInterface {
         if (accountBtn) {
             accountBtn.addEventListener('click', () => {
                 window.location.href = 'account.html';
+            });
+        }
+        
+        if (newChatBtn) {
+            newChatBtn.addEventListener('click', () => {
+                this.startNewChat();
             });
         }
 
@@ -254,6 +357,7 @@ class ChatInterface {
         const mobileLoginBtn = document.getElementById('mobileLoginBtn');
         const mobileSignupBtn = document.getElementById('mobileSignupBtn');
         const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+        const mobileNewChatBtn = document.getElementById('mobileNewChatBtn');
         
         if (mobileLoginBtn) {
             mobileLoginBtn.addEventListener('click', () => {
@@ -270,6 +374,12 @@ class ChatInterface {
         if (mobileAccountBtn) {
             mobileAccountBtn.addEventListener('click', () => {
                 window.location.href = 'account.html';
+            });
+        }
+        
+        if (mobileNewChatBtn) {
+            mobileNewChatBtn.addEventListener('click', () => {
+                this.startNewChat();
             });
         }
     }
@@ -370,7 +480,8 @@ class ChatInterface {
                 body: JSON.stringify({
                     message: message,
                     image: imageToSend, // Use the stored image
-                    conversationId: this.conversationId
+                    conversationId: this.conversationId,
+                    conversationHistory: this.conversationHistory
                 })
             });
 
@@ -409,6 +520,9 @@ class ChatInterface {
     }
 
     addMessage(role, content, imageUrl = null) {
+        // Add to conversation history
+        this.addToConversationHistory(role, content, imageUrl);
+        
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${role}-message ${imageUrl ? 'image-message' : ''}`;
         
