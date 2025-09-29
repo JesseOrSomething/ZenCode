@@ -1354,9 +1354,9 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     display: none;
 }
 
-/* Show New Chat only on the chat page */
-.chat-page .new-chat-btn,
-.chat-page .mobile-nav-btn.new-chat-btn {
+/* Show New Chat only when chat is fullscreen */
+.container.fullscreen .new-chat-btn,
+.container.fullscreen .mobile-nav-btn.new-chat-btn {
     display: inline-block;
 }
 
