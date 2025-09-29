@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 /* Smooth dark grey gradient background */
 .container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #11111b 0%, #181825 20%, #1e1e2e 40%, #313244 60%, #45475a 80%, #585b70 100%);
+    background: linear-gradient(135deg, #0e0e11 0%, #161618 20%, #222225 40%, #2e2e31 60%, #3a3a3d 80%, #47474b 100%);
     background-size: 400% 400%;
     animation: gradientShift 60s ease infinite;
     position: relative;
@@ -94,13 +94,13 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .new-chat-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: #fff;
-    border: none;
+    border: 1px solid #1a1a1a;
 }
 
 .new-chat-btn:hover {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    background: #111111;
     transform: scale(1.05);
 }
 
@@ -614,7 +614,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     padding: 0;
     height: 100vh;
     border-radius: 0;
-    background: linear-gradient(135deg, #11111b 0%, #181825 50%, #1e1e2e 100%);
+    background: linear-gradient(135deg, #0e0e11 0%, #1a1a1c 50%, #262628 100%);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1344,8 +1344,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .mobile-nav-btn.new-chat-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
+    background: #000000;
+    border: 1px solid #1a1a1a;
 }
 
 .mobile-nav-btn.login-btn {
