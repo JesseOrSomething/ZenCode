@@ -1302,16 +1302,19 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     border-radius: 2px;
 }
 
-.mobile-menu-btn.active .hamburger:nth-child(1) {
-    transform: rotate(45deg) translateY(6px);
-}
-
-.mobile-menu-btn.active .hamburger:nth-child(2) {
+.mobile-menu-btn.active .hamburger {
     opacity: 0;
 }
 
-.mobile-menu-btn.active .hamburger:nth-child(3) {
-    transform: rotate(-45deg) translateY(-6px);
+.mobile-menu-btn.active::after {
+    content: '×';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
 }
 
 .mobile-nav {
