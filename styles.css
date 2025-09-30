@@ -1303,7 +1303,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .mobile-menu-btn.active .hamburger:nth-child(1) {
-    transform: rotate(45deg) translate(0, 6px);
+    transform: rotate(45deg) translateY(6px);
 }
 
 .mobile-menu-btn.active .hamburger:nth-child(2) {
@@ -1311,7 +1311,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .mobile-menu-btn.active .hamburger:nth-child(3) {
-    transform: rotate(-45deg) translate(0, -6px);
+    transform: rotate(-45deg) translateY(-6px);
 }
 
 .mobile-nav {
