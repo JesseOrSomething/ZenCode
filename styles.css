@@ -1672,6 +1672,53 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     }
 }
 
+/* Mobile chat input fit: keep input and buttons on one row */
+@media (max-width: 768px) {
+    .input-wrapper {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+    .message-input {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        padding: 10px 14px;
+        height: 44px;
+    }
+    .image-button,
+    .send-button {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        flex-shrink: 0;
+    }
+}
+
+/* Glass UI for mobile menu to match site */
+.mobile-nav {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.mobile-nav-link,
+.mobile-nav-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(6px) saturate(130%);
+    -webkit-backdrop-filter: blur(6px) saturate(130%);
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+}
+
 /* Mobile fullscreen improvements */
 @media (max-width: 768px) {
     .input-field.fullscreen {
