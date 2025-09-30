@@ -14,6 +14,13 @@ body {
     overflow-x: hidden;
 }
 
+/* Lock page scroll when fullscreen chat is active */
+body.fullscreen-active {
+    height: 100dvh;
+    overflow: hidden;
+    position: relative;
+}
+
 /* Ensure all text elements use IBM Plex Mono */
 h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul, ol {
     font-family: 'IBM Plex Mono', monospace;
@@ -631,6 +638,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     height: 100vh;
     padding: 20px;
     align-items: stretch;
+    overflow: hidden; /* prevent page scroll */
 }
 
 .input-container.fullscreen {
@@ -639,6 +647,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* prevent parent overflow */
 }
 
 .input-field.fullscreen {
@@ -650,6 +659,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     flex-direction: column;
     width: 100%;
     box-sizing: border-box;
+    overflow: hidden; /* keep only chat-messages scrollable */
 }
 
 .input-field.fullscreen .chat-messages {
@@ -658,6 +668,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     max-height: none !important;
     overflow-y: auto;
     margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch; /* smooth scrolling */
 }
 
 .input-field.fullscreen .divider {

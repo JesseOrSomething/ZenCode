@@ -672,6 +672,7 @@ class ChatInterface {
         mainContent.classList.add('fullscreen');
         inputContainer.classList.add('fullscreen');
         inputField.classList.add('fullscreen');
+        document.body.classList.add('fullscreen-active');
 
         // Update chat messages height for fullscreen (use dynamic viewport units on mobile)
         const chatMessages = document.getElementById('chatMessages');
