@@ -1376,13 +1376,13 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 }
 
 .mobile-nav-btn.login-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
+    background: #000000;
+    border: 1px solid #1a1a1a;
 }
 
 .mobile-nav-btn.signup-btn {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    border: none;
+    background: #000000;
+    border: 1px solid #1a1a1a;
 }
 
 .mobile-nav-btn.account-btn {
