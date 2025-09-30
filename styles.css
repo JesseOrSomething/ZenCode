@@ -1431,7 +1431,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .main-content {
         padding: 10px;
-        height: calc(100vh - 80px);
+        height: calc(100dvh - 80px);
         margin-top: 60px;
     }
     
@@ -1476,7 +1476,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .chat-messages {
         padding: 15px;
-        max-height: 60vh;
+        max-height: 60dvh;
         width: 100%;
         box-sizing: border-box;
     }
@@ -1607,7 +1607,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .main-content {
         padding: 5px;
-        height: calc(100vh - 60px);
+        height: calc(100dvh - 60px);
         margin-top: 50px;
     }
     
@@ -1641,7 +1641,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .chat-messages {
         padding: 8px;
-        max-height: 50vh;
+        max-height: 50dvh;
         width: 100%;
     }
     

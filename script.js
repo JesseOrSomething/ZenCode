@@ -56,8 +56,10 @@ class ChatInterface {
         this.hasStartedConversation = false;
         this.attachedImage = null;
         
-        // Focus on input
-        this.messageInput.focus();
+        // Focus on input (avoid triggering mobile keyboard)
+        if (!this.isMobile() && this.messageInput) {
+            this.messageInput.focus();
+        }
         
         // Close mobile menu if open
         const mobileNav = document.getElementById('mobileNav');
@@ -264,20 +266,26 @@ class ChatInterface {
             }
         });
 
-        // Focus input on page load
-        this.messageInput.focus();
+        // Focus input on page load (avoid on mobile)
+        if (!this.isMobile() && this.messageInput) {
+            this.messageInput.focus();
+        }
         
-        // Keep input focused when clicking elsewhere
+        // Keep input focused when clicking elsewhere (but not on mobile or when mobile menu is open)
         document.addEventListener('click', (e) => {
-            // If the click is not on the input field or its children, refocus it
-            if (!this.messageInput.contains(e.target) && !this.imageButton.contains(e.target) && !this.sendButton.contains(e.target)) {
+            const mobileNav = document.getElementById('mobileNav');
+            const isMobileMenuOpen = mobileNav && mobileNav.classList.contains('active');
+            const clickedInsideControls = this.messageInput.contains(e.target) || this.imageButton.contains(e.target) || this.sendButton.contains(e.target);
+            if (!this.isMobile() && !isMobileMenuOpen && !clickedInsideControls) {
                 this.messageInput.focus();
             }
         });
         
-        // Also refocus when clicking on the chat messages area
+        // Also refocus when clicking on the chat messages area (avoid on mobile)
         this.chatMessages.addEventListener('click', () => {
-            this.messageInput.focus();
+            if (!this.isMobile()) {
+                this.messageInput.focus();
+            }
         });
         
         // Navigation functionality
@@ -347,9 +355,15 @@ class ChatInterface {
         const mobileNav = document.getElementById('mobileNav');
         
         if (mobileMenuBtn && mobileNav) {
-            mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 mobileNav.classList.toggle('active');
                 mobileMenuBtn.classList.toggle('active');
+                // Blur input to prevent mobile keyboard opening
+                if (this.messageInput) {
+                    this.messageInput.blur();
+                }
             });
         }
         
@@ -659,10 +673,11 @@ class ChatInterface {
         inputContainer.classList.add('fullscreen');
         inputField.classList.add('fullscreen');
 
-        // Update chat messages height for fullscreen
+        // Update chat messages height for fullscreen (use dynamic viewport units on mobile)
         const chatMessages = document.getElementById('chatMessages');
         if (chatMessages) {
-            chatMessages.style.maxHeight = 'calc(100vh - 200px)';
+            const viewportUnit = this.isMobile() ? '100dvh' : '100vh';
+            chatMessages.style.maxHeight = `calc(${viewportUnit} - 200px)`;
             chatMessages.style.transition = 'max-height 0.5s ease';
         }
 
@@ -675,6 +690,10 @@ class ChatInterface {
                 }, 200);
             }
         }, 100);
+    }
+
+    isMobile() {
+        return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
     handleImageUpload(file) {
