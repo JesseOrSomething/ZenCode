@@ -1437,6 +1437,26 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         height: calc(100dvh - 80px);
         margin-top: 60px;
     }
+
+    /* Override when fullscreen to avoid extra top space and scrolling */
+    .container.fullscreen {
+        min-height: 100dvh;
+    }
+    .main-content.fullscreen {
+        height: 100dvh;
+        margin-top: 0;
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+    }
+    .input-container.fullscreen {
+        height: calc(100dvh - 20px);
+    }
+    .input-field.fullscreen {
+        min-height: calc(100dvh - 120px);
+    }
+    .input-field.fullscreen .chat-messages {
+        max-height: calc(100dvh - 200px) !important;
+    }
     
     .input-container {
         margin-bottom: 20px;
@@ -1612,6 +1632,23 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         padding: 5px;
         height: calc(100dvh - 60px);
         margin-top: 50px;
+    }
+
+    /* Override when fullscreen to remove gaps on very small screens */
+    .main-content.fullscreen {
+        height: 100dvh;
+        margin-top: 0;
+        padding-top: max(8px, env(safe-area-inset-top));
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+    .input-container.fullscreen {
+        height: calc(100dvh - 16px);
+    }
+    .input-field.fullscreen {
+        min-height: calc(100dvh - 110px);
+    }
+    .input-field.fullscreen .chat-messages {
+        max-height: calc(100dvh - 190px) !important;
     }
     
     .input-container {

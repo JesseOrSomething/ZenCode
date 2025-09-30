@@ -677,7 +677,7 @@ class ChatInterface {
         const chatMessages = document.getElementById('chatMessages');
         if (chatMessages) {
             const viewportUnit = this.isMobile() ? '100dvh' : '100vh';
-            chatMessages.style.maxHeight = `calc(${viewportUnit} - 200px)`;
+            chatMessages.style.maxHeight = `calc(${viewportUnit} - 190px)`;
             chatMessages.style.transition = 'max-height 0.5s ease';
         }
 
