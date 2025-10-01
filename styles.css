@@ -1419,6 +1419,11 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+        height: 100dvh;
+    }
+    
     .nav {
         top: 10px;
         right: 10px;
@@ -1443,10 +1448,16 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         display: none;
     }
     
+    .container {
+        height: 100dvh;
+        overflow: hidden;
+    }
+    
     .main-content {
         padding: 10px;
         height: calc(100dvh - 80px);
         margin-top: 60px;
+        overflow: hidden;
     }
 
     /* Override when fullscreen to avoid extra top space and scrolling */
