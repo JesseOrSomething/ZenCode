@@ -1426,9 +1426,14 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         -webkit-overflow-scrolling: auto; /* avoid body momentum scroll */
     }
     
-    /* Hide input container on mobile to reduce clutter */
+    /* Remove input container styling on mobile to reduce clutter */
     .input-container {
-        display: none;
+        background: none;
+        border: none;
+        backdrop-filter: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
     }
     
     .nav {
