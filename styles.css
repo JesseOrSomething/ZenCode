@@ -1490,8 +1490,9 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .input-container {
         margin-bottom: 20px;
-        padding: 0 5px;
+        padding: 0 15px;
         width: 100%;
+        box-sizing: border-box;
     }
     
     .input-field {
@@ -1748,7 +1749,11 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         flex-direction: row;
         align-items: center;
         gap: 8px;
-        width: 100%;
+        width: calc(100% - 20px);
+        max-width: calc(100vw - 40px);
+        margin: 0 auto;
+        padding: 0 10px;
+        box-sizing: border-box;
     }
     .message-input {
         flex: 1;
@@ -1756,6 +1761,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         width: auto;
         padding: 10px 14px;
         height: 44px;
+        max-width: calc(100% - 100px); /* Leave space for buttons */
     }
     .image-button,
     .send-button {
@@ -1763,6 +1769,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         height: 44px;
         padding: 0;
         flex-shrink: 0;
+        min-width: 44px;
+        min-height: 44px;
     }
 }
 
