@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     gap: 12px;
     z-index: 20;
     max-width: calc(100vw - 40px);
-    overflow: hidden;
+    overflow: visible; /* allow hover-scaled buttons to render without clipping */
 }
 
 .nav-link {
