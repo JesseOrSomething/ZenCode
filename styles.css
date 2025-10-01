@@ -631,6 +631,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     height: 100vh;
     border-radius: 0;
     background: linear-gradient(135deg, #8839ef 0%, #dc8a78 50%, #179299 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 60s ease infinite;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
