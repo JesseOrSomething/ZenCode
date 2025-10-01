@@ -1765,11 +1765,16 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         flex-direction: row;
         align-items: center;
         gap: 8px;
-        width: calc(100% - 10px);
-        max-width: calc(100vw - 20px);
+        width: calc(100% - 20px);
+        max-width: calc(100vw - 32px);
         margin: 0 auto;
-        padding: 0 5px;
+        padding: 12px 16px; /* restore comfortable padding like desktop */
         box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     .message-input {
         flex: 1;
