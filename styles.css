@@ -1490,9 +1490,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .input-container {
         margin-bottom: 20px;
-        padding: 0 15px;
+        padding: 0 5px;
         width: 100%;
-        box-sizing: border-box;
     }
     
     .input-field {
@@ -1749,10 +1748,10 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         flex-direction: row;
         align-items: center;
         gap: 8px;
-        width: calc(100% - 20px);
-        max-width: calc(100vw - 40px);
+        width: calc(100% - 10px);
+        max-width: calc(100vw - 20px);
         margin: 0 auto;
-        padding: 0 10px;
+        padding: 0 5px;
         box-sizing: border-box;
     }
     .message-input {
