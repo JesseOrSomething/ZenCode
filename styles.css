@@ -681,7 +681,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     .input-field.fullscreen .input-area {
         order: 2;
         margin-bottom: 0;
-        padding: 0 10px; /* Minimal padding for screen edges */
+        padding: 0 15px;
+        padding-bottom: max(10px, env(safe-area-inset-bottom)); /* Use safe area for mobile */
     }
 
 .input-field.fullscreen .input-wrapper {
