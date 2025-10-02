@@ -680,13 +680,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 
     .input-field.fullscreen .input-area {
         order: 2;
-        margin-bottom: 0; /* Remove bottom margin completely */
-        padding: 0 15px; /* Reduce padding to prevent cutoff */
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        box-sizing: border-box;
+        margin-bottom: 0;
+        padding: 0 10px; /* Minimal padding for screen edges */
     }
 
 .input-field.fullscreen .input-wrapper {
@@ -1540,8 +1535,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .image-button,
     .send-button {
-        width: 36px; /* Reduce button size */
-        height: 36px; /* Reduce button size */
+        width: 44px; /* Restore normal button size */
+        height: 44px; /* Restore normal button size */
         padding: 0;
         flex-shrink: 0;
         min-width: 44px;
@@ -1769,11 +1764,11 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     .input-wrapper {
         flex-direction: row;
         align-items: center;
-        gap: 6px; /* Reduce gap to fit better */
+        gap: 8px;
         width: 100%;
         max-width: 100%;
         margin: 0;
-        padding: 10px 12px; /* Reduce padding to fit screen */
+        padding: 12px 16px; /* Restore comfortable padding */
         box-sizing: border-box;
         background: rgba(255, 255, 255, 0.10);
         border: 1px solid rgba(255, 255, 255, 0.20);
@@ -1785,14 +1780,14 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
         flex: 1;
         min-width: 0;
         width: auto;
-        padding: 8px 12px; /* Reduce padding to fit better */
-        height: 40px; /* Reduce height */
-        max-width: calc(100% - 80px); /* Reduce space for buttons */
+        padding: 10px 14px; /* Restore comfortable padding */
+        height: 44px; /* Restore normal height */
+        max-width: calc(100% - 100px); /* Restore space for buttons */
     }
     .image-button,
     .send-button {
-        width: 36px; /* Reduce button size */
-        height: 36px; /* Reduce button size */
+        width: 44px; /* Restore normal button size */
+        height: 44px; /* Restore normal button size */
         padding: 0;
         flex-shrink: 0;
         min-width: 44px;
@@ -1832,8 +1827,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     
     .input-field.fullscreen .chat-messages {
         padding: 10px;
-        max-height: calc(100vh - 120px); /* Account for fixed input area at bottom */
-        margin-bottom: 80px; /* Space for fixed input area */
+        max-height: calc(100vh - 200px); /* Account for input area */
+        margin-bottom: 20px; /* Normal spacing */
     }
     
     .input-field.fullscreen .message-input {
