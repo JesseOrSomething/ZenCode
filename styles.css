@@ -678,11 +678,11 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     margin-bottom: 20px;
 }
 
-.input-field.fullscreen .input-area {
-    order: 2;
-    margin-bottom: 20px;
-    padding: 0 20px;
-}
+    .input-field.fullscreen .input-area {
+        order: 2;
+        margin-bottom: 5px; /* Reduced from 20px to move closer to bottom */
+        padding: 0 20px;
+    }
 
 .input-field.fullscreen .input-wrapper {
     background: none;
@@ -1823,11 +1823,12 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
     .input-field.fullscreen {
         padding: 15px;
         min-height: calc(100vh - 80px);
+        padding-bottom: 5px; /* Move input closer to bottom */
     }
     
     .input-field.fullscreen .chat-messages {
         padding: 10px;
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 220px); /* Give more space for input area */
     }
     
     .input-field.fullscreen .message-input {
