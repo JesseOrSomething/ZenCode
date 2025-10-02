@@ -680,8 +680,15 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 
     .input-field.fullscreen .input-area {
         order: 2;
-        margin-bottom: 5px; /* Reduced from 20px to move closer to bottom */
+        margin-bottom: 0; /* Remove bottom margin completely */
         padding: 0 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
 .input-field.fullscreen .input-wrapper {
@@ -1821,14 +1828,14 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label, li, ul,
 /* Mobile fullscreen improvements */
 @media (max-width: 768px) {
     .input-field.fullscreen {
-        padding: 15px;
+        padding: 15px 15px 0 15px; /* Remove bottom padding completely */
         min-height: calc(100vh - 80px);
-        padding-bottom: 5px; /* Move input closer to bottom */
     }
     
     .input-field.fullscreen .chat-messages {
         padding: 10px;
-        max-height: calc(100vh - 220px); /* Give more space for input area */
+        max-height: calc(100vh - 120px); /* Account for fixed input area at bottom */
+        margin-bottom: 80px; /* Space for fixed input area */
     }
     
     .input-field.fullscreen .message-input {
